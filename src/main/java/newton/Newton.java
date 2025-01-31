@@ -4,7 +4,7 @@
 
 package newton;
 
-import newton.modules.Rule;
+import newton.modules.*;
 import newton.interfaces.*;
 import java.util.Set;
 
@@ -15,7 +15,7 @@ import java.util.Set;
 public class Newton {
 
     public static void main(String[] args) {
-	IDatabase db;
+	IDatabase db = new SQLiteDatabase();
 	Set<Rule> rules = db.getRules();
 	for(Rule rule: rules){
 		rule.apply();

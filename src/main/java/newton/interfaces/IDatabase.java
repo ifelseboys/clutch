@@ -15,4 +15,5 @@ public interface IDatabase {
 	public Set<Rule> getRules();
 	public void replaceRule(Rule r);
 	public void deleteRule(Rule r);
+	public void updateRules(Set<Rule> rules);
 }
