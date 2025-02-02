@@ -4,8 +4,9 @@
 - [x] main function @pxlman
 - [x] interfaces and main classes @pxlman
 - [ ] time related triggers @islam
-- [ ] keystroke triggers @ehab
-
+- [ ] keystroke triggers @pxlman
+- [x] As a user i want the reaction can run a script using a command @pxlman
+- [x] As a user i want the reaction can run a file @pxlman
 ## Future tasks
 - [ ] GUI
 - [ ] tests
@@ -19,8 +20,6 @@
 - [ ] As a user i want the trigger can be application usage time
 - [ ] As a user i want the reaction can adjust screen brightness
 - [ ] As a user i want the reaction can adjust the sound volume
-- [ ] As a user i want the reaction can run a script using a command
-- [ ] As a user i want the reaction can run a file
 - [ ] As a user i want the reaction can close a window
 - [ ] As a user i want the reaction can turn on/off a screen monitor
 - [ ] As a user i want the reaction can close a window with it's title containing some word
