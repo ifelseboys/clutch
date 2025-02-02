@@ -23,7 +23,7 @@ public class Rule {
 	Set<IReaction> reactions;
 
 	// Public 
-	public void Rule(){
+	public Rule(){
 	
 	}
 	public void setId(long id){
