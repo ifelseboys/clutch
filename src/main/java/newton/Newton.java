@@ -15,11 +15,12 @@ import java.util.Set;
 public class Newton {
 
     public static void main(String[] args) {
-	IDatabase db = new SQLiteDatabase();
-	Set<Rule> rules = db.getRules();
-	for(Rule rule: rules){
-		rule.apply();
-	}	
+	// IDatabase db = new SQLiteDatabase();
+	// Set<Rule> rules = db.getRules();
+	// for(Rule rule: rules){
+	// 	rule.apply();
+	// }	
+	System.out.println("\nHello World");
 
     }
 }
