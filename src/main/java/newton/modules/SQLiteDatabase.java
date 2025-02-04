@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public class SQLiteDatabase implements IDatabase {
 	Set<Rule> rules;
-	public void SQLiteDatabase(){
+	public SQLiteDatabase(){
 	}
 	public void addRule(Rule r){
 
