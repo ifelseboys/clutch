@@ -5,10 +5,6 @@ package newton.interfaces;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
 
-/**
- *
- * @author pxlman
- */
 public interface ITrigger {
-	public boolean isTriggered();	
+	boolean isTriggered();
 }
