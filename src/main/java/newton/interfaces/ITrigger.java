@@ -7,4 +7,5 @@ package newton.interfaces;
 
 public interface ITrigger {
 	boolean isTriggered();
+	public static int compare(ITrigger t1, ITrigger t2) {return 1;} //TODO : may be overrriden in children to avoid duplicate triggers
 }

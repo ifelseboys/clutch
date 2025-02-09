@@ -10,5 +10,6 @@ package newton.interfaces;
  * @author pxlman
  */
 public interface IReaction {
-	public void react();	
+	public void react();
+	public static int compare(IReaction r1, IReaction r2){return 0;}
 }

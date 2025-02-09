@@ -1,82 +1,54 @@
 package newton.modules;
 
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
+
+import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import newton.interfaces.ITrigger;
-import org.quartz.*;
-import org.quartz.impl.StdSchedulerFactory;
-import static org.quartz.CalendarIntervalScheduleBuilder.calendarIntervalSchedule;
 
 
 public class TimeTrigger implements ITrigger {
     
-    Date startTime;
-    String repeatingUnit; //y (year), mo (month), w(week), d(day), h(hour), m (minute), s(second)
-    int repeatingAmount;
+    private LocalDateTime startTime;
+    private TimeUnit repeatingUnit;
+    private int repeatingInterval;
     private boolean is_triggered = false;
 
-    static SchedulerFactory factory =  new StdSchedulerFactory();
-    static Scheduler scheduler;
-    static int identifier = 1;
-    static {
-        try {
-            scheduler = factory.getScheduler();
-        } catch (SchedulerException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    static ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-
-
-    public TimeTrigger(Date startTime, String repeatingUnit, int repeatingAmount) {
+    public TimeTrigger(LocalDateTime startTime, TimeUnit repeatingUnit, int repeatingInterval) {
         this.startTime = startTime;
         this.repeatingUnit = repeatingUnit;
-        this.repeatingAmount = repeatingAmount;
-        run();
+        this.repeatingInterval = repeatingInterval;
+        setUP();
     }
 
     //setters and getters, just skip
-    public boolean isTriggered() {return is_triggered;}
+    public boolean isTriggered() {
+        if(is_triggered){
+            is_triggered = false;
+            return true;
+        }
+        return false;
+    } ///this is overriden from the interface
     public void setIsTriggered(boolean isTriggered){this.is_triggered = isTriggered;}
+    public void setStartTime(LocalDateTime startTime) {this.startTime = startTime;}
+    public void setRepeatingInterval(int repeatingInterval) {this.repeatingInterval = repeatingInterval;}
+    public void setRepeatingUnit(TimeUnit repeatingUnit) {this.repeatingUnit = repeatingUnit;}
 
-
-    public void run(){
-        TriggerBuilder builder = TriggerBuilder.newTrigger().
-                withIdentity("trigger" + identifier).startAt(new Date());
-
-        //based on the unit we will choose the reapeating stuff
-        Trigger trigger;
-        switch (repeatingUnit) {
-            case "y" :
-                trigger = builder.withSchedule(calendarIntervalSchedule().withIntervalInYears(repeatingAmount)).build();
-            case "mo" :
-                trigger = builder.withSchedule(calendarIntervalSchedule().withIntervalInMonths(repeatingAmount)).build();
-            case "w" :
-                trigger = builder.withSchedule(calendarIntervalSchedule().withIntervalInWeeks(repeatingAmount)).build();
-                break;
-            case "d" :
-                trigger = builder.withSchedule(calendarIntervalSchedule().withIntervalInDays(repeatingAmount)).build();
-                break;
-            case "h" :
-                trigger = builder.withSchedule(SimpleScheduleBuilder.repeatHourlyForever(repeatingAmount)).build();
-                break;
-            case "m" :
-                trigger = builder.withSchedule(SimpleScheduleBuilder.repeatMinutelyForever(repeatingAmount)).build();
-                break;
-            case "s" :
-                trigger = builder.withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(repeatingAmount)).build();
-                break;
-            default: //this is not a repeating task
-                trigger = builder.build();
+    public void setUP(){
+        long initialDelay = startTime.atZone(ZoneId.systemDefault()).toInstant().getEpochSecond() - (System.currentTimeMillis()/1000);
+        Runnable mark_triggered = () -> {setIsTriggered(true);}; ///just assuming that this might work lol
+        if(repeatingInterval == 0){//that means it's non-recurring obviously
+            scheduler.schedule(mark_triggered, initialDelay, TimeUnit.SECONDS); // gonna be a little messy with long periods, but it's acceptable because this is java bro, it's not retarded c++
         }
-        //we want to creat a job, that all it does is calling the function isTriggered
-        JobDetail Tswtich = JobBuilder.newJob(TriggerSwitch.class).withIdentity("job" + identifier++).build();
-        try {
-            scheduler.scheduleJob(Tswtich, trigger);
-        }
-        catch(SchedulerException se){
-            //TODO : change this to something suitable when code actually works
-            se.printStackTrace();
+        else{
+            scheduler.scheduleAtFixedRate(mark_triggered, initialDelay, repeatingInterval, repeatingUnit);
         }
     }
 }

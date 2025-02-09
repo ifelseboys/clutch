@@ -4,30 +4,52 @@
 
 package newton;
 
+import newton.modules.TimeTrigger;
 import newton.modules.reactions.*;
 // import newton.modules.triggers.*;
 import newton.modules.Rule;
 import newton.interfaces.*;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Formatter;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import static java.lang.Thread.sleep;
 
 /**
  *
  * @author pxlman
  */
+
+
 public class Newton {
 
     public static void main(String[] args) {
-	// IDatabase db = new SQLiteDatabase();
-	// Set<Rule> rules = db.getRules();
-	// for(Rule rule: rules){
-	// 	rule.apply();
-	// }	
-	System.out.println("\nHello World");
-	IReaction command_executor_reaction = new CommandExecutorReaction("asdlfkjsd");
-	command_executor_reaction.react();
+		Date trigger_date = new Date();
+		String repeating_unit = "s";
+		int repeating_interval = 20;
 
-	IReaction file_opener_reaction = new FileOpenerReaction("/home/pxlman/sc.c");
-	file_opener_reaction.react();
+		Rule rule = new Rule();
+
+		String filepath = "C:\\Users\\1way\\Documents\\hello.txt";
+		rule.setStartLife(LocalDateTime.now());
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+
+		IReaction reaction = new FileOpenerReaction(filepath);
+		ITrigger trigger = new TimeTrigger(LocalDateTime.now(), TimeUnit.SECONDS, 10);
+
+		rule.addTrigger(trigger);
+		rule.addReaction(reaction);
+
+		System.out.println(LocalDateTime.now().format(formatter));
+		rule.setEndLife(LocalDateTime.now().plusMinutes(1));
+
+		while(true) {
+			rule.apply();
+		}
 
     }
 }
