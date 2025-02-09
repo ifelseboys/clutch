@@ -38,8 +38,11 @@ public class Newton {
 		rule.setStartLife(LocalDateTime.now());
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
-		IReaction reaction = new FileOpenerReaction(filepath);
-		ITrigger trigger = new TimeTrigger(LocalDateTime.now(), TimeUnit.SECONDS, 10);
+//		IReaction reaction = new FileOpenerReaction(filepath);
+//		IReaction reaction = new CommandExecutorReaction("notepad");
+		IReaction reaction = new Notification("Thekr", "Othker Allah");
+
+		ITrigger trigger = new TimeTrigger(LocalDateTime.now(), TimeUnit.SECONDS, 8);
 
 		rule.addTrigger(trigger);
 		rule.addReaction(reaction);
@@ -53,3 +56,5 @@ public class Newton {
 
     }
 }
+
+
