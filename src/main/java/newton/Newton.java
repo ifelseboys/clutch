@@ -4,20 +4,20 @@
 
 package newton;
 
-import newton.modules.TimeTrigger;
+import newton.interfaces.IDatabase;
+import newton.interfaces.IReaction;
+import newton.interfaces.ITrigger;
+import newton.modules.JSONDatabase;
+import newton.modules.triggers.*;
 import newton.modules.reactions.*;
-// import newton.modules.triggers.*;
 import newton.modules.Rule;
-import newton.interfaces.*;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Formatter;
-import java.util.Set;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
+
 
 /**
  *
@@ -25,36 +25,38 @@ import static java.lang.Thread.sleep;
  */
 
 
+
 public class Newton {
 
     public static void main(String[] args) {
-		Date trigger_date = new Date();
-		String repeating_unit = "s";
-		int repeating_interval = 20;
 
-		Rule rule = new Rule();
+//		IReaction reaction = new Notification("Attention Here", "Othker Allah");
+		TimeTrigger trigger = new TimeTrigger();
 
-		String filepath = "C:\\Users\\1way\\Documents\\hello.txt";
-		rule.setStartLife(LocalDateTime.now());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 
-//		IReaction reaction = new FileOpenerReaction(filepath);
-//		IReaction reaction = new CommandExecutorReaction("notepad");
-		IReaction reaction = new Notification("Thekr", "Othker Allah");
+//		Rule rule = new Rule();
+//		rule.setStartLife(LocalDateTime.now());
+//		rule.setEndLife(LocalDateTime.now().plusMinutes(20));
+//		rule.addTrigger(trigger);
+//		rule.addReaction(reaction);
 
-		ITrigger trigger = new TimeTrigger(LocalDateTime.now(), TimeUnit.SECONDS, 8);
 
-		rule.addTrigger(trigger);
-		rule.addReaction(reaction);
 
-		System.out.println(LocalDateTime.now().format(formatter));
-		rule.setEndLife(LocalDateTime.now().plusMinutes(1));
-
-		while(true) {
-			rule.apply();
-		}
+//		ArrayList<Rule> rules = new ArrayList<Rule>();
+//		IDatabase database = new JSONDatabase();
+//
+//
+//		while(true) {
+//			for (int i = 0; i < rules.size(); i++) {
+//				rules.get(i).apply();
+//				try{
+//					Thread.sleep(1000);
+//				}
+//				catch(InterruptedException e){
+//					e.printStackTrace();
+//				}
+//			}
+//		}
 
     }
 }
-
-

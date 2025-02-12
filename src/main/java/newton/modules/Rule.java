@@ -11,9 +11,7 @@ package newton.modules;
  */
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.ArrayList;
 
 import newton.interfaces.IReaction;
 import newton.interfaces.ITrigger;
@@ -23,16 +21,19 @@ public class Rule {
 	long id;
 	LocalDateTime start_life;
 	LocalDateTime end_life;
-	TreeSet<ITrigger> triggers;
-	TreeSet<IReaction> reactions;
+	ArrayList<ITrigger> triggers;
+	ArrayList<IReaction> reactions;
+
 
 	// Public 
 	public Rule(){
 		//TODO : by default we add a trigger, that it's job is to add the Rule to the data base at the start_time
 		//TODO : by default we add a trigger, that it's job is delete the Rule itself from the database
-		triggers = new TreeSet<>(ITrigger::compare);
-		reactions = new TreeSet<>(IReaction::compare);
+		triggers = new ArrayList<>();
+		reactions = new ArrayList<>();
 	}
+
+
 
 	public void setId(long id){
 		this.id = id;	
@@ -45,24 +46,21 @@ public class Rule {
 	}
 	public void addTrigger(ITrigger trigger){triggers.add(trigger);}
 	public void addReaction(IReaction reaction){reactions.add(reaction);}
-	public void removeTrigger(ITrigger trigger){
-		triggers.remove(trigger);
-	}
+	public void removeTrigger(ITrigger trigger){triggers.remove(trigger);}
 	public void removeReaction(IReaction reaction){
 		reactions.remove(reaction);
 	}
 
+	public long getId() {return id;}
+	public ArrayList<ITrigger> getTriggers() {return triggers;}
+	public ArrayList<IReaction> getReactions() {return reactions;}
+	public LocalDateTime getStart_life() {return start_life;}
+	public LocalDateTime getEnd_life() {return end_life;}
+
 	public void apply(){
-		// LocalDateTime.compareTo(obj) does first - second
-		if (LocalDateTime.now().compareTo(start_life) < 0){
-			return;
-		}
-		if (LocalDateTime.now().compareTo(end_life) > 0){
-			return;
-		}	
 		// Check if a trigger is not true to return
 		for(ITrigger trigger : triggers){
-			if(!trigger.isTriggered()){
+			if(!trigger.checkTrigger()){
 				return;
 			}
 		}
@@ -70,5 +68,10 @@ public class Rule {
 		for(IReaction reaction: reactions){
 			reaction.react();
 		}
+	}
+
+
+	boolean equals(Rule rule){
+		return (id == rule.id);
 	}
 }
