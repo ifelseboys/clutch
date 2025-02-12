@@ -30,33 +30,28 @@ public class Newton {
 
     public static void main(String[] args) {
 
-//		IReaction reaction = new Notification("Attention Here", "Othker Allah");
-		TimeTrigger trigger = new TimeTrigger();
+		IReaction reaction = new Notification("Attention Here", "Othker Allah");
+		ITrigger trigger = new TimeTrigger(LocalDateTime.now(), TimeUnit.SECONDS, 10);
 
 
-//		Rule rule = new Rule();
-//		rule.setStartLife(LocalDateTime.now());
-//		rule.setEndLife(LocalDateTime.now().plusMinutes(20));
-//		rule.addTrigger(trigger);
-//		rule.addReaction(reaction);
+		Rule rule = new Rule();
+		rule.setStartLife(LocalDateTime.now());
+		rule.setEndLife(LocalDateTime.now().plusMinutes(20));
+		rule.addTrigger(trigger);
+		rule.addReaction(reaction);
 
 
 
-//		ArrayList<Rule> rules = new ArrayList<Rule>();
-//		IDatabase database = new JSONDatabase();
-//
-//
-//		while(true) {
-//			for (int i = 0; i < rules.size(); i++) {
-//				rules.get(i).apply();
-//				try{
-//					Thread.sleep(1000);
-//				}
-//				catch(InterruptedException e){
-//					e.printStackTrace();
-//				}
-//			}
-//		}
+		ArrayList<Rule> rules = new ArrayList<Rule>();
+		IDatabase database = new JSONDatabase();
+//        rules.add(rule);
+//        database.updateRules(rules);
+        rules = database.getRules();
+
+		while(true) {
+            for (Rule value : rules)
+                value.apply();
+		}
 
     }
 }
