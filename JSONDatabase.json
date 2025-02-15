@@ -1,0 +1,1 @@
+[{"id":0,"start_life":[2025,2,12,16,10,17,241371100],"end_life":[2025,2,12,16,30,17,241371100],"triggers":[{"type":"time","repeatingInterval":10,"repeatingUnit":"SECONDS","startTime":[2025,2,12,16,10,17,239372200]}],"reactions":[{"type":"notification","title":"Attention Here","message":"Othker Allah"}]}]
