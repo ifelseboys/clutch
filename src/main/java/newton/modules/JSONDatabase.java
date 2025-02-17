@@ -8,6 +8,7 @@ import newton.interfaces.IDatabase;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 public class JSONDatabase implements IDatabase {
@@ -30,7 +31,7 @@ public class JSONDatabase implements IDatabase {
 
 
     @Override
-    public void updateRules(ArrayList<Rule> rules) {
+    public void updateRules(CopyOnWriteArrayList<Rule> rules) {
         mapper.registerModule(new JavaTimeModule());
         try{
             mapper.writeValue(new File(filePath), rules);
@@ -43,14 +44,14 @@ public class JSONDatabase implements IDatabase {
 
 
     @Override
-    public ArrayList<Rule> getRules() {
+    public CopyOnWriteArrayList<Rule> getRules() {
 
         mapper.registerModule(new SimpleModule());
         mapper.registerModule(new JavaTimeModule());
         //the purpose is to read from the file and return the values of rules
-        ArrayList<Rule> rules = null;
+        CopyOnWriteArrayList<Rule> rules = null;
         try{
-            rules = mapper.readValue(new File(filePath), new TypeReference<ArrayList<Rule>>() {});
+            rules = mapper.readValue(new File(filePath), new TypeReference<CopyOnWriteArrayList<Rule>>() {});
         }
         catch (Exception e){
             System.out.println("couldn't deserialize rules");

@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import newton.interfaces.ITrigger;
+
 import javax.annotation.*;
 
 
@@ -18,6 +19,7 @@ public class TimeTrigger implements ITrigger {
     private int repeatingInterval;
 
     static PriorityQueue<LocalDateTime> schedule = new PriorityQueue<>();
+
 
     // to set up the tirgger in the scheduler
     @PostConstruct
@@ -33,8 +35,8 @@ public class TimeTrigger implements ITrigger {
     }
 
     public TimeTrigger(){}
-
     //setters and getters, just skip
+
     @Override
     public boolean checkTrigger() {
         if(schedule.isEmpty()) return false;
@@ -53,11 +55,13 @@ public class TimeTrigger implements ITrigger {
 
 
 
+
+
+
     //setter just skip
     public void setRepeatingUnit(String repeatingUnit) {this.repeatingUnit = TimeUnit.valueOf(repeatingUnit);} /// just trying to avoid enums for json
     public void setRepeatingInterval(int repeatingInterval) {this.repeatingInterval = repeatingInterval;}
     public void setStartTime(LocalDateTime startTime) {this.startTime = startTime;}
-
 
     //getters, just skip man
     public LocalDateTime getStartTime() {return startTime;}

@@ -1,6 +1,5 @@
 package newton.modules.triggers;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import newton.interfaces.ITrigger;
 

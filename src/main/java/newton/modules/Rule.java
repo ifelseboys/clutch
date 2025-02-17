@@ -17,15 +17,21 @@ import newton.interfaces.IReaction;
 import newton.interfaces.ITrigger;
 
 public class Rule {
-	// Private
+
 	long id;
 	LocalDateTime start_life;
-	LocalDateTime end_life;
+	LocalDateTime expirationDate;
 	ArrayList<ITrigger> triggers;
 	ArrayList<IReaction> reactions;
 
 
-	// Public 
+	public Rule(LocalDateTime start_life, LocalDateTime expirationDate, ArrayList<ITrigger> triggers, ArrayList<IReaction> reactions) {
+		this.start_life = start_life;
+		this.expirationDate = expirationDate;
+		this.triggers = triggers;
+		this.reactions = reactions;
+	}
+
 	public Rule(){
 		//TODO : by default we add a trigger, that it's job is to add the Rule to the data base at the start_time
 		//TODO : by default we add a trigger, that it's job is delete the Rule itself from the database
@@ -42,7 +48,7 @@ public class Rule {
 		this.start_life = t;	
 	}
 	public void setEndLife(LocalDateTime t){
-		this.end_life = t;	
+		this.expirationDate = t;
 	}
 	public void addTrigger(ITrigger trigger){triggers.add(trigger);}
 	public void addReaction(IReaction reaction){reactions.add(reaction);}
@@ -55,7 +61,7 @@ public class Rule {
 	public ArrayList<ITrigger> getTriggers() {return triggers;}
 	public ArrayList<IReaction> getReactions() {return reactions;}
 	public LocalDateTime getStart_life() {return start_life;}
-	public LocalDateTime getEnd_life() {return end_life;}
+	public LocalDateTime getExpirationDate() {return expirationDate;}
 
 	public void apply(){
 		// Check if a trigger is not true to return

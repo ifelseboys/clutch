@@ -9,7 +9,6 @@ import newton.modules.triggers.TimeTrigger;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import newton.modules.triggers.MachineStartTrigger;
-import newton.modules.triggers.TimeTrigger;
 
 @JsonTypeInfo(
 		use = JsonTypeInfo.Id.NAME,
