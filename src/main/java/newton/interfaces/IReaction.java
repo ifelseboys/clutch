@@ -11,6 +11,7 @@ import newton.modules.reactions.CommandExecutor;
 import newton.modules.reactions.FileOpener;
 import newton.modules.reactions.Notification;
 
+
 @JsonTypeInfo(
 		use = JsonTypeInfo.Id.NAME,
 		include = JsonTypeInfo.As.PROPERTY,

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import newton.interfaces.IReaction;
 
+import javax.annotation.PostConstruct;
+
 
 @JsonTypeName("notification")
 @JsonPropertyOrder({"title", "message"})
@@ -24,10 +26,10 @@ public class Notification implements IReaction {
 
 
     public Notification() {
-        title = "hellooooooo";
-        message = "wooooooorld";
+        title = "";
+        message = "";
         setUP();
-    } //just for json
+    }
 
     public Notification(String title, String message) {
         this.title = title;
@@ -36,7 +38,7 @@ public class Notification implements IReaction {
         windowsCommand = windowsCommand.replace("{1}", message);
     }
 
-
+    @PostConstruct
     public void setUP(){
         if(windowsCommand == null || windowsCommand.isEmpty()){
             windowsCommand = "powershell.exe -Command \""
@@ -49,15 +51,11 @@ public class Notification implements IReaction {
                     .concat("$notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('Notification Script'); ")
                     .concat("$notifier.Show($toast)\"");
         }
-        windowsCommand = windowsCommand.replace("{0}", title);
-        windowsCommand = windowsCommand.replace("{1}", message);
-        System.out.println("method setUP has been called");
+
     }
 
     @Override
     public void react() {
-        System.out.println("method react() has been called");
-
         String os = System.getProperty("os.name");
         if (os.toLowerCase().contains("windows")) {
             show_windows_notification();
@@ -87,6 +85,17 @@ public class Notification implements IReaction {
         }
     }
 
+    //getters
     public String getTitle() {return title;}
     public String getMessage() {return message;}
+
+    //setters
+    public void setTitle(String title) {
+        this.title = title;
+        windowsCommand = windowsCommand.replace("{0}", title);
+    }
+    public void setMessage(String message) {
+        this.message = message;
+        windowsCommand = windowsCommand.replace("{1}", message);
+    }
 }

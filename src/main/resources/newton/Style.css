@@ -1,0 +1,114 @@
+/* Apply to the root scene */
+.root {
+    -fx-background-color: linear-gradient(to bottom, #1E3C72, #2A5298);
+    -fx-font-family: "Arial";
+}
+
+/* Style for buttons */
+.button {
+    -fx-background-color: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #2400FF;
+    -fx-border-width: 2px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 5, 0, 3, 3);
+}
+
+.button:hover {
+    -fx-background-color: linear-gradient(to bottom, #8E2DE2, #4A00E0);
+    -fx-border-color: white;
+}
+
+.button:pressed {
+    -fx-background-color: #2400FF;
+}
+
+/* Style for checkboxes */
+.check-box {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+}
+
+.check-box .box {
+    -fx-background-color: transparent;
+    -fx-border-color: white;
+    -fx-border-width: 2px;
+}
+
+.check-box:selected .box {
+    -fx-background-color: #8E2DE2;
+    -fx-border-color: #4A00E0;
+}
+
+/* Style for combo boxes */
+.combo-box {
+    -fx-background-color: white;
+    -fx-border-color: #4A00E0;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: black;
+}
+
+.combo-box .arrow-button {
+    -fx-background-color: #4A00E0;
+}
+
+.combo-box .arrow-button:hover {
+    -fx-background-color: #8E2DE2;
+}
+
+/* Style for labels and text */
+.label {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.text-field {
+    -fx-background-color: white;
+    -fx-border-color: #8E2DE2;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-padding: 5px;
+}
+
+.text-field:focused {
+    -fx-border-color: #4A00E0;
+}
+
+/* Style for tooltips */
+.tooltip {
+    -fx-background-color: #4A00E0;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-padding: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Style for progress bars */
+.progress-bar {
+    -fx-accent: #8E2DE2;
+}
+
+/* Style for scroll bars */
+.scroll-bar {
+    -fx-background-color: #1E3C72;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #8E2DE2;
+    -fx-background-radius: 10px;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #4A00E0;
+}

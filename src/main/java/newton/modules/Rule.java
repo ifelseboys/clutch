@@ -10,15 +10,17 @@ package newton.modules;
  * @author pxlman
  */
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 import newton.interfaces.IReaction;
 import newton.interfaces.ITrigger;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+
 public class Rule {
 
 	long id;
+	static long idCounter = 0;
 	LocalDateTime start_life;
 	LocalDateTime expirationDate;
 	ArrayList<ITrigger> triggers;
@@ -30,6 +32,7 @@ public class Rule {
 		this.expirationDate = expirationDate;
 		this.triggers = triggers;
 		this.reactions = reactions;
+		id = idCounter++;
 	}
 
 	public Rule(){
@@ -40,7 +43,7 @@ public class Rule {
 	}
 
 
-
+	//setters
 	public void setId(long id){
 		this.id = id;	
 	}
@@ -50,6 +53,19 @@ public class Rule {
 	public void setEndLife(LocalDateTime t){
 		this.expirationDate = t;
 	}
+	public void setTriggers(ArrayList<ITrigger> triggers) {this.triggers = triggers;}
+	public void setReactions(ArrayList<IReaction> reactions) {this.reactions = reactions;}
+	public void setIdCounter(long idCounter) {this.idCounter = idCounter;}
+
+	//getters
+	public long getId() {return id;}
+	public long getIdCounter() {return idCounter;}
+	public ArrayList<ITrigger> getTriggers() {return triggers;}
+	public ArrayList<IReaction> getReactions() {return reactions;}
+	public LocalDateTime getStart_life() {return start_life;}
+	public LocalDateTime getExpirationDate() {return expirationDate;}
+
+
 	public void addTrigger(ITrigger trigger){triggers.add(trigger);}
 	public void addReaction(IReaction reaction){reactions.add(reaction);}
 	public void removeTrigger(ITrigger trigger){triggers.remove(trigger);}
@@ -57,11 +73,6 @@ public class Rule {
 		reactions.remove(reaction);
 	}
 
-	public long getId() {return id;}
-	public ArrayList<ITrigger> getTriggers() {return triggers;}
-	public ArrayList<IReaction> getReactions() {return reactions;}
-	public LocalDateTime getStart_life() {return start_life;}
-	public LocalDateTime getExpirationDate() {return expirationDate;}
 
 	public void apply(){
 		// Check if a trigger is not true to return

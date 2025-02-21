@@ -10,7 +10,6 @@ public class MachineStartTrigger implements ITrigger {
 
     public boolean checkTrigger(){
         if(!is_triggered){
-            System.out.println("MachineStartTrigger: Machine started");
             is_triggered = true;
             return true;
         }else {

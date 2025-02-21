@@ -4,21 +4,21 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
-
 import java.time.LocalDateTime;
 
 
 //because there is no class in javafx that gets the hour and minute precisely
 public class PreciseTimePicker extends HBox {
 
-    private final DatePicker datePicker;
-    private final TextField hourField;
-    private final TextField minuteField;
-    private final ToggleButton amPmToggle;
-    private final CheckBox specialOptionCheckbox;
+    private DatePicker datePicker;
+    private TextField hourField;
+    private TextField minuteField;
+    private ToggleButton amPmToggle;
+    private CheckBox specialOptionCheckbox;
 
-    private final BooleanProperty useCurrentTime = new SimpleBooleanProperty(false);
+    private BooleanProperty useCurrentTime = new SimpleBooleanProperty(false);
     private String specialOption;
+    private boolean isSpecialOptionSelected = false;
 
     public PreciseTimePicker(String specialOption) {
         // Initialize components
@@ -27,7 +27,7 @@ public class PreciseTimePicker extends HBox {
         minuteField = new TextField();
         amPmToggle = new ToggleButton("AM");
         this.specialOption = specialOption;
-        specialOptionCheckbox = new CheckBox("Set to" + specialOption);
+        specialOptionCheckbox = new CheckBox("set to : ".concat(specialOption.toLowerCase()));
 
 
         // Set up layout
@@ -49,9 +49,26 @@ public class PreciseTimePicker extends HBox {
 
         // Add event listeners
         specialOptionCheckbox.selectedProperty().addListener((obs, oldValue, newValue) -> {
-            if (newValue) {
-                setToCurrentTime();
+
+            if (newValue) {  // Checkbox is selected
+                if (specialOption.equals("NOW")) {
+                    setToCurrentTime();
+                } else if (specialOption.equals("INFINITY")) {
+                    // Either disable fields
+                    datePicker.setDisable(true);
+                    hourField.setDisable(true);
+                    minuteField.setDisable(true);
+                    amPmToggle.setDisable(true);
+                    // Or set to max values if you prefer
+                }
+            } else {  // Checkbox is deselected
+                // Re-enable fields
+                datePicker.setDisable(false);
+                hourField.setDisable(false);
+                minuteField.setDisable(false);
+                amPmToggle.setDisable(false);
             }
+            isSpecialOptionSelected = newValue;
         });
 
         amPmToggle.setOnAction(event -> {

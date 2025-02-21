@@ -1,14 +1,9 @@
 package newton.interfaces;
-import newton.modules.triggers.TimeTrigger;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import newton.modules.triggers.MachineStartTrigger;
+import newton.modules.triggers.TimeTrigger;
 
 @JsonTypeInfo(
 		use = JsonTypeInfo.Id.NAME,

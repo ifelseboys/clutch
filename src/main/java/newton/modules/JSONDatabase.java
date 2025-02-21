@@ -1,5 +1,6 @@
 package newton.modules;
 
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -8,7 +9,7 @@ import newton.interfaces.IDatabase;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.List;
 
 
 public class JSONDatabase implements IDatabase {
@@ -31,8 +32,10 @@ public class JSONDatabase implements IDatabase {
 
 
     @Override
-    public void updateRules(CopyOnWriteArrayList<Rule> rules) {
+    public void updateRules(List<Rule> rules) {
         mapper.registerModule(new JavaTimeModule());
+        mapper.registerModule(new SimpleModule());
+
         try{
             mapper.writeValue(new File(filePath), rules);
         }
@@ -44,23 +47,26 @@ public class JSONDatabase implements IDatabase {
 
 
     @Override
-    public CopyOnWriteArrayList<Rule> getRules() {
+    public List<Rule> getRules() {
+
+        File file = new File(filePath);
+        if(!file.exists() || file.length() == 0){
+            return new ArrayList<Rule>();
+        }
 
         mapper.registerModule(new SimpleModule());
         mapper.registerModule(new JavaTimeModule());
         //the purpose is to read from the file and return the values of rules
-        CopyOnWriteArrayList<Rule> rules = null;
+        ArrayList<Rule> rules = null;
         try{
-            rules = mapper.readValue(new File(filePath), new TypeReference<CopyOnWriteArrayList<Rule>>() {});
+            rules = mapper.readValue(new File(filePath), new TypeReference<ArrayList<Rule>>() {});
+            return rules;
         }
         catch (Exception e){
             System.out.println("couldn't deserialize rules");
             e.printStackTrace();
+            throw new RuntimeException("couldn't deserialize rules");
         }
-        finally{
-            return rules;
-        }
-
     }
 
 

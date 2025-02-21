@@ -2,9 +2,10 @@ package newton.modules.reactions;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import newton.interfaces.IReaction;
+
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.awt.Desktop;
 
 @JsonTypeName("fileOpener")
 public class FileOpener implements IReaction {
@@ -24,7 +25,7 @@ public class FileOpener implements IReaction {
         try {
             Desktop.getDesktop().open(file);
         } catch (IOException e) {
-            System.out.println("FileOpenerReaction: " + e.getMessage());
+            e.printStackTrace();
         }
     } 
 }

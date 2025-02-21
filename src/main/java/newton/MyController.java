@@ -1,9 +1,10 @@
-package newton.Controllers;
+package newton;
 
 import javafx.event.ActionEvent;
 
 public class MyController {
     public void SwitchToAddRule(ActionEvent event){
-        Scenemanager.changeScene(event, "AddRule.fxml");
+        Scenemanager.switchToRuleAdder(event, "AddRule.fxml");
     }
+
 }
