@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 //because there is no class in javafx that gets the hour and minute precisely
 public class PreciseTimePicker extends HBox {
-
+    private Label label;
     private DatePicker datePicker;
     private TextField hourField;
     private TextField minuteField;
@@ -20,8 +20,9 @@ public class PreciseTimePicker extends HBox {
     private String specialOption;
     private boolean isSpecialOptionSelected = false;
 
-    public PreciseTimePicker(String specialOption) {
+    public PreciseTimePicker(String specialOption, String labelText) {
         // Initialize components
+        label = new Label(labelText);
         datePicker = new DatePicker();
         hourField = new TextField();
         minuteField = new TextField();
@@ -32,7 +33,7 @@ public class PreciseTimePicker extends HBox {
 
         // Set up layout
         setSpacing(10);
-        setPadding(new Insets(10));
+        setPadding(new Insets(10, 0, 0, 10));
 
         // Configure TextField properties
         hourField.setPromptText("HH");
@@ -40,6 +41,7 @@ public class PreciseTimePicker extends HBox {
 
         // Add components to the HBox
         getChildren().addAll(
+                label,
                 datePicker,
                 new Label("Hour (1-12):"), hourField,
                 new Label("Minute (0-59):"), minuteField,
@@ -173,5 +175,9 @@ public class PreciseTimePicker extends HBox {
             amPmToggle.setText(dateTime.getHour() < 12 ? "AM" : "PM");
             amPmToggle.setSelected(dateTime.getHour() < 12);
         }
+    }
+
+    public boolean isEmpty() {
+        return datePicker.getValue() == null && hourField.getText().isEmpty() && minuteField.getText().isEmpty();
     }
 }

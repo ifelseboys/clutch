@@ -17,4 +17,5 @@ import java.util.List;
 public interface IDatabase {
 	public void updateRules(List<Rule> rules);
 	public List<Rule> getRules();
+	public List<String> getStringRules();
 }

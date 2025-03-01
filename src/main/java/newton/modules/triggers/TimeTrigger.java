@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 
 @JsonTypeName("time")
-@JsonPropertyOrder({"repeatingInterval", "repeatingUnit", "startTime"})
+@JsonPropertyOrder({"id", "idCounter", "repeatingInterval", "repeatingUnit", "startTime"})
 public class TimeTrigger implements ITrigger {
 
     private LocalDateTime startTime;
@@ -43,7 +43,7 @@ public class TimeTrigger implements ITrigger {
     public boolean checkTrigger() {
         if(schedule.isEmpty()) return false;
 
-        while(schedule.peek().getKey() == id && !schedule.peek().getValue().isAfter(LocalDateTime.now())){ //my time has come
+        if(schedule.peek().getKey().equals(id) && schedule.peek().getValue().isBefore(LocalDateTime.now()) ){ //my time has come
             schedule.poll();
             if(repeatingInterval != 0)//a repeating task
                 schedule.add(new Pair<Integer, LocalDateTime> (id, LocalDateTime.now().plus(repeatingInterval, repeatingUnit.toChronoUnit())));
@@ -70,12 +70,9 @@ public class TimeTrigger implements ITrigger {
 
     //getters, just skip man
     public LocalDateTime getStartTime() {return startTime;}
-
     public String getRepeatingUnit() {return repeatingUnit.toString();}
     public int getRepeatingInterval() {return repeatingInterval;}
-    public static int getIdCounter() {return idCounter;}
     public int getId() {return id;}
-
-
+    public static int getIdCounter() {return idCounter;}
 
 }

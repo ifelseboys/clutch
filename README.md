@@ -17,6 +17,6 @@ As long as you write *safe and tested code*, you more than welcomed
 to add to the project.
 
 You might need to check out the [TODO](./TODO.md) file to be able to help us improve this project.
-
+Please, before doing anything, check the cookbook guide.
 
 FREE PALESTINE

@@ -8,30 +8,31 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 
+import java.util.Objects;
 
-public class Scenemanager {
 
-    public static void switchToRuleAdder(ActionEvent event, String fxmlFile) {
+public class SceneManager {
+
+    public static void switchToRuleAdder(ActionEvent event) {
 
         try {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             RuleAdder.setStage(window);
 
-            Parent root = FXMLLoader.load(Scenemanager.class.getResource(fxmlFile));
+            Parent root = FXMLLoader.load(SceneManager.class.getResource("AddRule.fxml"));
             RuleAdder.setAddRulefxmlFile(root);
             RuleAdder.makeScene();
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("fuck javafx");
         }
     }
 
     public static void changeScene(ActionEvent event, String fxmlFile) {
         try {
-            Parent root = FXMLLoader.load(Scenemanager.class.getResource(fxmlFile));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(SceneManager.class.getResource(fxmlFile)));
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(Scenemanager.class.getResource("style.css").toExternalForm());
+            scene.getStylesheets().add(SceneManager.class.getResource("style.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();

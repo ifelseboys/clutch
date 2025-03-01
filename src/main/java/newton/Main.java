@@ -7,12 +7,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import newton.modules.JSONDatabase;
 import newton.modules.Rule;
-
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import static java.lang.Thread.sleep;
 
 public class Main extends Application {
+
     @Override
     public void start(Stage stage) throws Exception {
         rules = new CopyOnWriteArrayList<>(database.getRules());
@@ -46,4 +46,22 @@ public class Main extends Application {
         rules.add(rule);
         database.updateRules(rules);
     }
+
+    public static void deleteRule(Rule rule) {
+        rules.remove(rule);
+        database.updateRules(rules);
+    }
+
+    public static void deleteRule(int id){
+        for (Rule rule : rules)
+            if (rule.getId() == id)
+                deleteRule(rule);
+    }
+
+    public static List<String> getStringRules(){
+        return database.getStringRules();
+    }
 }
+
+
+

@@ -94,8 +94,20 @@
             <version>2.15.2</version> <!-- Use the latest stable version -->
         </dependency>
 
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>6.4.0</version>
+        </dependency>
 
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>ipgeolocation-repo</id>
+            <url>https://maven.ipgeolocation.io</url>
+        </repository>
+    </repositories>
 
     <build>
         <plugins>
@@ -133,5 +145,13 @@
 
 
         </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
     </build>
 </project>

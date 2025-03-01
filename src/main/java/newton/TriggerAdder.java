@@ -37,11 +37,12 @@ public class TriggerAdder {
 
 
     //for TimeTrigger specifically
-    private PreciseTimePicker startTriggerField = new PreciseTimePicker("NOW");
+    private PreciseTimePicker startTriggerField = new PreciseTimePicker("NOW", "start time :");
     private ComboBox<String> repeatingUnitBox = new ComboBox<>();
     private TextField repeatingIntervalField = new TextField();
 
     public VBox createTriggerVBox(){
+        clearTriggerFields();
         vBoxForTriggerTextFields.getChildren().clear();
         vBoxForTriggerTextFields.setPadding(new Insets(0,0,0,10));
 
@@ -75,10 +76,6 @@ public class TriggerAdder {
         vBoxForTriggerTextFields.getChildren().clear();
         vBoxForTriggerTextFields.setPadding(new Insets(0,0,0,10));
         //hat7ebeni walla Ato5 rohi betabanga
-        Text t1 = new Text("Starting Time");
-        t1.setFont(textFont);
-        vBoxForTriggerTextFields.getChildren().add(t1);
-
 
         vBoxForTriggerTextFields.getChildren().add(startTriggerField);
 
@@ -126,6 +123,7 @@ public class TriggerAdder {
                 variables.put(variableNameIterator.next(), fieldIterator.next().getText());
 
         }
+        clearTriggerFields();
         return TriggerBuilder.build(selectedTriggerType, variables);
     }
 
@@ -139,4 +137,18 @@ public class TriggerAdder {
     }
 
     public VBox getvBoxForTriggerTextFields() {return vBoxForTriggerTextFields;}
+
+
+    public boolean areAllFieldsEmpty() {
+        if(selectedTriggerType.equals("TimeTrigger")){
+            return (repeatingIntervalField.getText().isEmpty() || repeatingUnitBox.getValue().isEmpty() && startTriggerField.isEmpty()) ;
+        }
+        else{
+            if(triggerFields.isEmpty()){return false;} //if there are no fields at all
+            for(TextField field : triggerFields)
+                if(!field.getText().isEmpty())
+                    return false;
+            return true;
+        }
+    }
 }

@@ -6,7 +6,7 @@ import newton.interfaces.ITrigger;
 @JsonTypeName("machineStart")
 public class MachineStartTrigger implements ITrigger {
 
-    static private boolean is_triggered = false;
+    private boolean is_triggered = false;
 
     public boolean checkTrigger(){
         if(!is_triggered){

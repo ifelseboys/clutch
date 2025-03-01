@@ -2,12 +2,15 @@ package newton.modules;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import newton.interfaces.IDatabase;
+import newton.modules.Enums.PrayerTime;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,5 +72,60 @@ public class JSONDatabase implements IDatabase {
         }
     }
 
+    @Override
+    public List<String> getStringRules() {
+        ObjectMapper mapper = new ObjectMapper();
 
+        File file = new File(filePath);
+        if(!file.exists() || file.length() == 0){
+            return new ArrayList<String>();
+        }
+
+        try {
+            // Read the JSON array as a list of JsonNode objects
+            JsonNode rootNode = mapper.readTree(new File("JSONDatabase.json"));
+            List<String> ruleStrings = new ArrayList<>();
+
+            if (rootNode.isArray()) {
+                for (JsonNode node : rootNode) {
+                    // Convert each JSON object back to its raw string representation
+                    String rawJson = mapper.writeValueAsString(node);
+                    ruleStrings.add(rawJson);
+                }
+            }
+            return ruleStrings;
+        } catch (Exception e) {
+            throw new RuntimeException("couldn't get rules");
+        }
+
+    }
+
+    static String prayerTimesFilePath = "PrayerTimes";
+    public void updatePrayerTimes(List<String> prayerTimes) {
+        File file = new File(prayerTimesFilePath);
+        if(!file.exists() || file.length() == 0){return;}
+
+        try {
+            mapper.writeValue(file, prayerTimes);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getPrayerTime(PrayerTime prayerTime) {
+        File file = new File(prayerTimesFilePath);
+        if(!file.exists() || file.length() == 0){
+            return "";
+        }
+
+        List<String> prayerTimes = new ArrayList<>();
+        try{
+            prayerTimes = mapper.readValue(file, new TypeReference<List<String>> () {});
+            return prayerTimes.get(prayerTime.ordinal());
+        }
+        catch (Exception e){
+            System.out.println("couldn't deserialize prayerTimes");
+            return "";
+        }
+    }
 }

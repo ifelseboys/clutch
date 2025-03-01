@@ -1,4 +1,4 @@
-module org.example.learnfxml {
+module newton {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -8,6 +8,8 @@ module org.example.learnfxml {
     requires com.fasterxml.jackson.datatype.jsr310;
     requires com.fasterxml.jackson.databind;
     requires java.desktop;
+    requires java.net.http;
+    requires com.github.oshi;
 
     opens newton to javafx.fxml;
     opens newton.modules to com.fasterxml.jackson.databind;

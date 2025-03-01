@@ -12,6 +12,7 @@ import newton.FXCustomClasses.PreciseTimePicker;
 import newton.interfaces.IReaction;
 import newton.interfaces.ITrigger;
 import newton.modules.Rule;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,7 +29,7 @@ public class RuleAdder {
     private ReactionAdder reactionAdder = new ReactionAdder();
 
     @FXML public void switchToMainWindow(ActionEvent event){
-        Scenemanager.changeScene(event, "mainWindow.fxml");
+        SceneManager.changeScene(event, "mainWindow.fxml");
     }
 
     private static Stage stage;
@@ -36,11 +37,14 @@ public class RuleAdder {
 
 
 
-    private static PreciseTimePicker startLineField = new PreciseTimePicker("NOW");
-    private static PreciseTimePicker expirationDateField = new PreciseTimePicker("INFINITY");
+
+    private static PreciseTimePicker startLineField = new PreciseTimePicker("NOW", "start time :          ");
+    private static PreciseTimePicker expirationDateField = new PreciseTimePicker("INFINITY", "expiration date : ");
 
     public static void makeScene(){
         VBox newStuff = new VBox();
+        startLineField.reset();
+        expirationDateField.reset();
         newStuff.getChildren().addAll(startLineField, expirationDateField, addRulefxmlFile);
 
         Scene scene = new Scene(newStuff);
@@ -64,6 +68,12 @@ public class RuleAdder {
 
         triggersVariablesLists.put("MachineStartTrigger", new ArrayList<>());
 
+        triggersVariablesLists.put("MemoryConsumptionTrigger", new ArrayList<>());
+        triggersVariablesLists.get("MemoryConsumptionTrigger").add("levelOfConsumption");
+
+
+        triggersVariablesLists.put("CPUConsumptionTrigger", new ArrayList<>());
+        triggersVariablesLists.get("CPUConsumptionTrigger").add("levelOfConsumption");
 
         reactionsVariablesLists.put("Notification", new ArrayList<>());
         reactionsVariablesLists.get("Notification").add("title");
@@ -123,45 +133,63 @@ public class RuleAdder {
     public void addTrigger(ActionEvent event){ //the most important function
         try{
             triggers.add(triggerAdder.getTrigger());
-            Scenemanager.showSuccess("Done", "A trigger has been added successfully");
+            SceneManager.showSuccess("Done", "A trigger has been added successfully");
         }
         catch (IllegalArgumentException e){
-            Scenemanager.showError("Invalid trigger information", "Please, enter a valid trigger");
+            SceneManager.showError("Invalid trigger information", "Please, enter a valid trigger");
         }
         catch (Exception e){
-            Scenemanager.showError("Error", "Missing information !");
+            SceneManager.showError("Error", "Missing information !");
         }
     }
 
 
     public void addReaction(ActionEvent event){
+        //if the user has entere something and don't want to you know
+
         try{
             reactions.add(reactionAdder.getReaction());
-            Scenemanager.showSuccess("Done", "A reaction has been added successfully");
+            SceneManager.showSuccess("Done", "A reaction has been added successfully");
         } catch (IllegalArgumentException e) {
-            Scenemanager.showError("Invalid reaction information", e.getMessage());
+            SceneManager.showError("Invalid reaction information", e.getMessage());
         }
         catch (Exception e){
-            Scenemanager.showError("Error", "Missing information !");
+            SceneManager.showError("Error", "Missing information !");
         }
     }
 
     public void addRule(ActionEvent event) {
+
         startLine = startLineField.getSelectedDateTime();
         expirationDate = expirationDateField.getSelectedDateTime();
 
         boolean isexpirationDateGone = (expirationDate.compareTo(LocalDateTime.now()) < 0);
-        if(startLine == null || expirationDate == null || triggers.isEmpty() || reactions.isEmpty() || isexpirationDateGone){
-            Scenemanager.showError("Missing Information", "Please, enter a trigger(s), a reaction(s), start time and expiration date");
+        if(startLine == null || expirationDate == null || isexpirationDateGone){
+            SceneManager.showError("Missing Information", "Please, enter a trigger(s), a reaction(s), start time and expiration date");
             return;
         }
 
-        //create the rule and add it to the memory and the database
+        if(!triggerAdder.areAllFieldsEmpty()) {
+            addTrigger(event);
+        }
+
+        if(!reactionAdder.areAllFieldsEmpty()) {
+            addReaction(event);
+        }
+
+        if(triggers.isEmpty() || reactions.isEmpty()){
+            SceneManager.showError("Missing Information", "Please, enter a trigger(s) and a reaction(s)");
+            return;
+        }
+
+        //create the
+        // rule and add it to the memory and the database
         Rule rule = new Rule(startLine, expirationDate, triggers, reactions);
         Main.addRule(rule);
         //change the scene
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainWindow.fxml"));
-        Scenemanager.showSuccess("Done", "A rule has been added successfully");
+        SceneManager.showSuccess("Done", "A rule has been added successfully");
+
         try{
             Scene scene = new Scene(fxmlLoader.load());
             scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
@@ -178,3 +206,5 @@ public class RuleAdder {
         stage = s;
     }
 }
+
+

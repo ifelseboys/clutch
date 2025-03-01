@@ -31,6 +31,7 @@ public class ReactionAdder {
     HashMap<String, ArrayList<String>> reactionsVariablesLists;
 
     public VBox createReactionVBox(){
+        clearReactionFields();
         vBoxForReactionTextFields.getChildren().clear();
         vBoxForReactionTextFields.setPadding(new Insets(0,0,0,10));
 
@@ -60,6 +61,7 @@ public class ReactionAdder {
         while(fieldIterator.hasNext() && variableNameIterator.hasNext())
             variables.put(variableNameIterator.next(), fieldIterator.next().getText());
 
+        clearReactionFields();
         return RactionBuilder.build(selectedReactionType, variables);
     }
 
@@ -73,4 +75,10 @@ public class ReactionAdder {
     public void setSelectedReactionType(String selectedReactionType) {this.selectedReactionType = selectedReactionType;}
     public VBox getvBoxForReactionTextFields() {return vBoxForReactionTextFields;}
 
+    public boolean areAllFieldsEmpty(){
+        for(TextField field : reactionFields)
+            if (!field.getText().isEmpty())
+                return false;
+        return true;
+    }
 }
