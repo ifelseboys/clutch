@@ -41,6 +41,7 @@ public class TriggerAdder {
     private ComboBox<String> repeatingUnitBox = new ComboBox<>();
     private TextField repeatingIntervalField = new TextField();
 
+    //creates the box containing all the information we need to take from the user
     public VBox createTriggerVBox(){
         clearTriggerFields();
         vBoxForTriggerTextFields.getChildren().clear();
@@ -103,8 +104,8 @@ public class TriggerAdder {
     }
 
 
-
-    public ITrigger getTrigger(){ //the most important function
+    //this creates the trigger based on the information provided by the user and the type of trigger he chose
+    public ITrigger getTrigger(){
 
         HashMap<String, String> variables = new HashMap<>();
 
@@ -126,6 +127,7 @@ public class TriggerAdder {
         clearTriggerFields();
         return TriggerBuilder.build(selectedTriggerType, variables);
     }
+
 
 
     private void clearTriggerFields() {

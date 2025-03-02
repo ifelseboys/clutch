@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import newton.modules.JSONDatabase;
 import newton.modules.Rule;
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import static java.lang.Thread.sleep;
@@ -33,8 +35,18 @@ public class Main extends Application {
     private static void runRules() {
         int sleepInterval = 90;
         while(true){
-            for(Rule rule : rules){
-                rule.apply();
+            for(int i = 0; i < rules.size(); i++){
+                Rule rule = rules.get(i);
+
+                if(rule.getExpirationDate().isBefore(LocalDateTime.now())){
+                    rules.remove(i);
+                    i--;
+                    continue;
+                }
+
+                if(rule.getStart_life().isBefore(LocalDateTime.now())){
+                    rule.apply();
+                }
             }
 
             try {sleep(sleepInterval);}
