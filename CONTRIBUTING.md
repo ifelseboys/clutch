@@ -11,6 +11,9 @@
 9. صل على النبي
 
 
-
+- put your work in the accreditation section
+- if any of your work needs to be documented, please don't be lazy 
+- don't comment bad code REWRITE IT
+- comments are a necessary evil, so don't over do it
 ## remember to test your code, and to clean it 
 ## please, remember to avoid duplicate code 
