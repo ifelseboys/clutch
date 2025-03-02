@@ -2,10 +2,7 @@ package newton.Builders;
 
 
 import newton.interfaces.ITrigger;
-import newton.modules.triggers.CPUConsumptionTrigger;
-import newton.modules.triggers.MachineStartTrigger;
-import newton.modules.triggers.MemoryConsumptionTrigger;
-import newton.modules.triggers.TimeTrigger;
+import newton.modules.triggers.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -25,6 +22,12 @@ public class TriggerBuilder {
         }
         else if (triggerType.equals("CPUConsumptionTrigger")) {
             return buildCPUConsumptionTrigger(variables);
+        }
+        else if (triggerType.equals("DiskConsumptionTrigger")) {
+            return buildDiskConsumptionTrigger(variables);
+        }
+        else if (triggerType.equals("BatteryConsumptionTrigger")) {
+            buildBatteryConsumptionTrigger(variables);
         }
         return null; //should never happen though
     }
@@ -68,6 +71,24 @@ public class TriggerBuilder {
             throw new IllegalArgumentException("level of Consumption should be between 0 and 100");
 
         return new CPUConsumptionTrigger(levelOfConsumption);
+    }
+
+    private static ITrigger buildDiskConsumptionTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
+        if(variables.isEmpty()) throw new IllegalArgumentException("Disk consumption Trigger has empty level of Consumption");
+        int levelOfConsumption = Integer.parseInt(variables.get("levelOfConsumption"));
+        if(levelOfConsumption < 0 || levelOfConsumption > 100)
+            throw new IllegalArgumentException("level of Consumption should be between 0 and 100");
+
+        return new DiskConsumptionTrigger(levelOfConsumption);
+    }
+
+    private static ITrigger buildBatteryConsumptionTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
+        if(variables.isEmpty()) throw new IllegalArgumentException("Battery Consumption Trigger has an empty level");
+        int levelOfConsumption = Integer.parseInt(variables.get("levelOfConsumption"));
+        if(levelOfConsumption < 0 || levelOfConsumption > 100)
+            throw new IllegalArgumentException("level of Consumption should be between 0 and 100");
+
+        return new BatteryConsumptionTrigger(levelOfConsumption);
     }
 
 

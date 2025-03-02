@@ -1,9 +1,7 @@
 package newton.Builders;
 
 import newton.interfaces.IReaction;
-import newton.modules.reactions.CommandExecutor;
-import newton.modules.reactions.FileOpener;
-import newton.modules.reactions.Notification;
+import newton.modules.reactions.*;
 
 import java.io.File;
 import java.util.HashMap;
@@ -19,6 +17,12 @@ public class RactionBuilder {
             }
             else if (reactionType.equals("Notification")){
                 return buildNotification(variables);
+            }
+            else if (reactionType.equals("ProcessKiller")){
+                return buildProcessKiller(variables);
+            }
+            else if (reactionType.equals("BrightnessController")){
+                return buildBrightnessController(variables);
             }
             else{
                 return null;
@@ -54,6 +58,22 @@ public class RactionBuilder {
         String title = variables.get("title");
         String message = variables.get("message");
         return new Notification(title, message);
+    }
+
+    public static IReaction buildProcessKiller(HashMap<String, String> variables) throws IllegalArgumentException {
+        if(variables.isEmpty()){
+            throw new IllegalArgumentException("Empty variables");
+        }
+        String process = variables.get("processName");
+        return new ProcessKiller(process);
+    }
+
+    public static IReaction buildBrightnessController(HashMap<String, String> variables) throws IllegalArgumentException {
+        if(variables.isEmpty()){
+            throw new IllegalArgumentException("Empty variables");
+        }
+        int percent = Integer.parseInt(variables.get("percent"));
+        return new BrightnessController(percent);
     }
 
     private static boolean isValidFilePath(String path) {

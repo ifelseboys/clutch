@@ -1,4 +1,4 @@
-package newton;
+package newton.Controllers;
 
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;

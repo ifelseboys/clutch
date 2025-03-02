@@ -1,10 +1,7 @@
 # TODO list
 
 ## Current week tasks
-- [ ] GUI
 - [ ] keystroke triggers @pxlman
-- [ ] trigger can be resources usage related @islam
-- [ ] reaction can kill a process @----
 - [ ] reaction can close a window @islam
 
 
@@ -16,6 +13,9 @@
 - [x] trigger can be when start the machine @pxlman
 - [x] reaction can run a file @pxlman
 - [x] As a user i want the reaction can push a notification
+- [x] reaction can kill a process @----
+- [x] GUI
+- [x] trigger can be resources usage related @islam
 
 
 ## Future tasks

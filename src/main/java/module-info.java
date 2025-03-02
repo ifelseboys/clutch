@@ -23,4 +23,6 @@ module newton {
     exports newton.modules.triggers to com.fasterxml.jackson.databind;
     exports newton.modules to com.fasterxml.jackson.databind;
     exports newton;
+    exports newton.Controllers;
+    opens newton.Controllers to javafx.fxml;
 }

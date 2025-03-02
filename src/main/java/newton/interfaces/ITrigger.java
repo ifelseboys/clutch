@@ -2,10 +2,7 @@ package newton.interfaces;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import newton.modules.triggers.CPUConsumptionTrigger;
-import newton.modules.triggers.MachineStartTrigger;
-import newton.modules.triggers.MemoryConsumptionTrigger;
-import newton.modules.triggers.TimeTrigger;
+import newton.modules.triggers.*;
 
 @JsonTypeInfo(
 		use = JsonTypeInfo.Id.NAME,
@@ -18,7 +15,9 @@ import newton.modules.triggers.TimeTrigger;
 		@JsonSubTypes.Type(value = TimeTrigger.class, name = "time"),
 		@JsonSubTypes.Type(value = MachineStartTrigger.class, name = "machineStart"),
 		@JsonSubTypes.Type(value = MemoryConsumptionTrigger.class, name = "MemoryConsumptionTrigger"),
-		@JsonSubTypes.Type(value = CPUConsumptionTrigger.class, name = "CPUConsumptionTrigger")
+		@JsonSubTypes.Type(value = CPUConsumptionTrigger.class, name = "CPUConsumptionTrigger"),
+		@JsonSubTypes.Type(value = DiskConsumptionTrigger.class, name = "DiskConsumptionTrigger"),
+		@JsonSubTypes.Type(value = BatteryConsumptionTrigger.class, name = "BatteryConsumptionTrigger")
 })
 
 public interface ITrigger {

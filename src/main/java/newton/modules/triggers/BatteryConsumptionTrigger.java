@@ -1,32 +1,42 @@
 package newton.modules.triggers;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import newton.interfaces.ITrigger;
 import oshi.SystemInfo;
-import oshi.hardware.GlobalMemory;
 import oshi.hardware.HardwareAbstractionLayer;
+import oshi.hardware.PowerSource;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@JsonTypeName("MemoryConsumptionTrigger")
-public class MemoryConsumptionTrigger implements ITrigger {
 
+public class BatteryConsumptionTrigger implements ITrigger {
     static private final SystemInfo systemInfo = new SystemInfo();
     static private final HardwareAbstractionLayer hardware = systemInfo.getHardware();
     private int levelOfConsumption = 100;
     private LocalDateTime lastFireTime = LocalDateTime.now();
 
-    public MemoryConsumptionTrigger() {}
-    public MemoryConsumptionTrigger(int levelOfConsumption) {
+    public BatteryConsumptionTrigger() {}
+    public BatteryConsumptionTrigger(int levelOfConsumption) {
         this.levelOfConsumption = levelOfConsumption;
     }
 
     @Override
     public boolean checkTrigger() {
-        GlobalMemory memory = hardware.getMemory();
-        double temp = ((double)memory.getAvailable() / memory.getTotal() ) * 100;
-        int usedMemoryPercentage =  100 - (int)temp;
-        if(usedMemoryPercentage >= levelOfConsumption){
+        List<PowerSource> powerSources = hardware.getPowerSources();
+        if(powerSources.isEmpty()) {
+            return false;
+        }
+
+
+        long remaining = 0;
+        long total = 0;
+        for (PowerSource battery : powerSources) {
+            remaining += (long) (battery.getRemainingCapacityPercent() * battery.getCurrentCapacity());
+            total += battery.getCurrentCapacity();
+        }
+        long usage = 100 - (total * 100 / remaining);
+
+        if(usage >= levelOfConsumption){
             if(!lastFireTime.isBefore(LocalDateTime.now().plusSeconds(8))){ //leave 8 second interval to avoid frantic behaviour
                 lastFireTime = LocalDateTime.now();
                 return true;
@@ -38,6 +48,7 @@ public class MemoryConsumptionTrigger implements ITrigger {
     public int getLevelOfConsumption() {
         return levelOfConsumption;
     }
+
     public void setLevelOfConsumption(int levelOfConsumption) {
         this.levelOfConsumption = levelOfConsumption;
     }

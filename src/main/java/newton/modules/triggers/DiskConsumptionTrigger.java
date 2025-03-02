@@ -2,31 +2,32 @@ package newton.modules.triggers;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import newton.interfaces.ITrigger;
-import oshi.SystemInfo;
-import oshi.hardware.GlobalMemory;
-import oshi.hardware.HardwareAbstractionLayer;
 
+import java.io.File;
 import java.time.LocalDateTime;
 
-@JsonTypeName("MemoryConsumptionTrigger")
-public class MemoryConsumptionTrigger implements ITrigger {
-
-    static private final SystemInfo systemInfo = new SystemInfo();
-    static private final HardwareAbstractionLayer hardware = systemInfo.getHardware();
+@JsonTypeName("DiskConsumptionTrigger")
+public class DiskConsumptionTrigger implements ITrigger {
     private int levelOfConsumption = 100;
     private LocalDateTime lastFireTime = LocalDateTime.now();
 
-    public MemoryConsumptionTrigger() {}
-    public MemoryConsumptionTrigger(int levelOfConsumption) {
+    public DiskConsumptionTrigger() {}
+    public DiskConsumptionTrigger(int levelOfConsumption) {
         this.levelOfConsumption = levelOfConsumption;
     }
 
     @Override
     public boolean checkTrigger() {
-        GlobalMemory memory = hardware.getMemory();
-        double temp = ((double)memory.getAvailable() / memory.getTotal() ) * 100;
-        int usedMemoryPercentage =  100 - (int)temp;
-        if(usedMemoryPercentage >= levelOfConsumption){
+        long freeSpace = 0;
+        long total = 0;
+        File[] roots = File.listRoots();
+        for (File root : roots) {
+            freeSpace += root.getFreeSpace();
+            total += root.getTotalSpace();
+        }
+        long usage = (freeSpace * 100 / total);
+
+        if(usage >= levelOfConsumption){
             if(!lastFireTime.isBefore(LocalDateTime.now().plusSeconds(8))){ //leave 8 second interval to avoid frantic behaviour
                 lastFireTime = LocalDateTime.now();
                 return true;
@@ -38,6 +39,7 @@ public class MemoryConsumptionTrigger implements ITrigger {
     public int getLevelOfConsumption() {
         return levelOfConsumption;
     }
+
     public void setLevelOfConsumption(int levelOfConsumption) {
         this.levelOfConsumption = levelOfConsumption;
     }

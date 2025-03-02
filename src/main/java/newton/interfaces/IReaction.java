@@ -7,9 +7,7 @@ package newton.interfaces;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import newton.modules.reactions.CommandExecutor;
-import newton.modules.reactions.FileOpener;
-import newton.modules.reactions.Notification;
+import newton.modules.reactions.*;
 
 
 @JsonTypeInfo(
@@ -22,7 +20,9 @@ import newton.modules.reactions.Notification;
 @JsonSubTypes({
 		@JsonSubTypes.Type(value = CommandExecutor.class, name = "commandExecutor"),
 		@JsonSubTypes.Type(value = FileOpener.class, name = "fileOpener"),
-		@JsonSubTypes.Type(value = Notification.class, name = "notification")
+		@JsonSubTypes.Type(value = Notification.class, name = "notification"),
+		@JsonSubTypes.Type(value = ProcessKiller.class, name = "ProcessKiller"),
+		@JsonSubTypes.Type(value =  BrightnessController.class, names = "BrightnessController")
 }
 )
 

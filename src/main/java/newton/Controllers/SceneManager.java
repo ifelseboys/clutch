@@ -1,4 +1,4 @@
-package newton;
+package newton.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -7,6 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import newton.Main;
 
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ public class SceneManager {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             RuleAdder.setStage(window);
 
-            Parent root = FXMLLoader.load(SceneManager.class.getResource("AddRule.fxml"));
+            Parent root = FXMLLoader.load(Main.class.getResource("AddRule.fxml"));
             RuleAdder.setAddRulefxmlFile(root);
             RuleAdder.makeScene();
 
@@ -30,9 +31,9 @@ public class SceneManager {
 
     public static void changeScene(ActionEvent event, String fxmlFile) {
         try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(SceneManager.class.getResource(fxmlFile)));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxmlFile)));
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(SceneManager.class.getResource("style.css").toExternalForm());
+            scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();

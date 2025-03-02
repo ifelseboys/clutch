@@ -51,11 +51,13 @@ public class JSONDatabase implements IDatabase {
 
     @Override
     public List<Rule> getRules() {
-
-        File file = new File(filePath);
-        if(!file.exists() || file.length() == 0){
-            return new ArrayList<Rule>();
+        try{
+            File file = new File(filePath);
+            if(!file.exists() || file.length() == 0){
+                return new ArrayList<Rule>();
+            }
         }
+        catch (Exception e){return new ArrayList<Rule>();}
 
         mapper.registerModule(new SimpleModule());
         mapper.registerModule(new JavaTimeModule());
@@ -76,10 +78,13 @@ public class JSONDatabase implements IDatabase {
     public List<String> getStringRules() {
         ObjectMapper mapper = new ObjectMapper();
 
-        File file = new File(filePath);
-        if(!file.exists() || file.length() == 0){
-            return new ArrayList<String>();
+        try{
+            File file = new File(filePath);
+            if(!file.exists() || file.length() == 0){
+                return new ArrayList<String>();
+            }
         }
+        catch (Exception e){return new ArrayList<String>();}
 
         try {
             // Read the JSON array as a list of JsonNode objects
@@ -102,6 +107,7 @@ public class JSONDatabase implements IDatabase {
 
     static String prayerTimesFilePath = "PrayerTimes";
     public void updatePrayerTimes(List<String> prayerTimes) {
+
         File file = new File(prayerTimesFilePath);
         if(!file.exists() || file.length() == 0){return;}
 

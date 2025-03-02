@@ -1,4 +1,4 @@
-package newton;
+package newton.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +9,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import newton.FXCustomClasses.PreciseTimePicker;
+import newton.Main;
 import newton.interfaces.IReaction;
 import newton.interfaces.ITrigger;
 import newton.modules.Rule;
@@ -48,7 +49,7 @@ public class RuleAdder {
         newStuff.getChildren().addAll(startLineField, expirationDateField, addRulefxmlFile);
 
         Scene scene = new Scene(newStuff);
-        scene.getStylesheets().add(RuleAdder.class.getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Hamoksha");
         stage.show();
@@ -74,6 +75,13 @@ public class RuleAdder {
 
         triggersVariablesLists.put("CPUConsumptionTrigger", new ArrayList<>());
         triggersVariablesLists.get("CPUConsumptionTrigger").add("levelOfConsumption");
+
+        triggersVariablesLists.put("DiskConsumptionTrigger", new ArrayList<>());
+        triggersVariablesLists.get("DiskConsumptionTrigger").add("levelOfConsumption");
+
+        triggersVariablesLists.put("BatteryConsumptionTrigger", new ArrayList<>());
+        triggersVariablesLists.get("BatteryConsumptionTrigger").add("levelOfConsumption");
+
 
         reactionsVariablesLists.put("Notification", new ArrayList<>());
         reactionsVariablesLists.get("Notification").add("title");
@@ -110,7 +118,7 @@ public class RuleAdder {
         VBox bigBox = new VBox(14);
         bigBox.getChildren().addAll(startLineField, expirationDateField, triggerAdder.createTriggerVBox(), reactionAdder.getvBoxForReactionTextFields(), addRulefxmlFile);
         Scene scene = new Scene(bigBox);
-        scene.getStylesheets().add(RuleAdder.class.getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
         stage.setScene(scene);
     }
 
@@ -122,7 +130,7 @@ public class RuleAdder {
         VBox bigBox = new VBox(14);
         bigBox.getChildren().addAll(startLineField, expirationDateField, triggerAdder.getvBoxForTriggerTextFields(), reactionAdder.createReactionVBox(), addRulefxmlFile);
         Scene scene = new Scene(bigBox);
-        scene.getStylesheets().add(RuleAdder.class.getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
         stage.setScene(scene);
     }
 
@@ -187,12 +195,12 @@ public class RuleAdder {
         Rule rule = new Rule(startLine, expirationDate, triggers, reactions);
         Main.addRule(rule);
         //change the scene
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainWindow.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("mainWindow.fxml"));
         SceneManager.showSuccess("Done", "A rule has been added successfully");
 
         try{
             Scene scene = new Scene(fxmlLoader.load());
-            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+            scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
             stage.setScene(scene);
         }
         catch (IOException e){System.err.println("Failed to load main window");}
