@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import newton.interfaces.IDatabase;
-import newton.modules.Enums.PrayerTime;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,10 +1,5 @@
 # TODO list
 
-## Current week tasks
-- [ ] keystroke triggers @pxlman
-- [ ] reaction can close a window @islam
-
-
 ## Completed tasks
 - [x] time related triggers @islam
 - [x] main function @pxlman
@@ -19,12 +14,15 @@
 
 
 ## Future tasks
-- [ ] tests
 - [ ] documentation
-- [ ] trigger can be mic input level related
-- [ ] trigger can be application usage time
-- [ ] reaction can adjust screen brightness
-- [ ] reaction can adjust the sound volume
-- [ ] reaction can turn on/off a screen monitor
-- [ ] reaction can close a window with it's title containing some word
-
+- [ ] a trigger  that can be mic input level related
+- [ ] a trigger  that can be application usage time
+- [ ] a reaction that can adjust screen brightness
+- [ ] a reaction that can adjust the sound volume
+- [ ] a reaction that can turn on/off a screen monitor
+- [ ] a reaction that can close a window with it's title containing some word
+- [ ] a reaction that can close a window @islam
+- [ ] keystroke triggers @pxlman
+- [ ] add Hijri Time trigger
+- [ ] Prayer Times
+- [ ] play Azan sound 

@@ -24,6 +24,9 @@ public class RactionBuilder {
             else if (reactionType.equals("BrightnessController")){
                 return buildBrightnessController(variables);
             }
+            else if (reactionType.equals("DeviceShutDown")){
+                return buildDeviceShutDown(variables);
+            }
             else{
                 return null;
             }
@@ -74,6 +77,10 @@ public class RactionBuilder {
         }
         int percent = Integer.parseInt(variables.get("percent"));
         return new BrightnessController(percent);
+    }
+
+    public static IReaction buildDeviceShutDown(HashMap<String, String> variables) throws IllegalArgumentException {
+        return new DeviceShutDown();
     }
 
     private static boolean isValidFilePath(String path) {

@@ -22,7 +22,8 @@ import newton.modules.reactions.*;
 		@JsonSubTypes.Type(value = FileOpener.class, name = "fileOpener"),
 		@JsonSubTypes.Type(value = Notification.class, name = "notification"),
 		@JsonSubTypes.Type(value = ProcessKiller.class, name = "ProcessKiller"),
-		@JsonSubTypes.Type(value =  BrightnessController.class, names = "BrightnessController")
+		@JsonSubTypes.Type(value =  BrightnessController.class, name = "BrightnessController"),
+		@JsonSubTypes.Type(value = DeviceShutDown.class, name = "DeviceShutDown")
 }
 )
 
