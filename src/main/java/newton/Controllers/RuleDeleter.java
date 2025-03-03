@@ -23,7 +23,12 @@ public class RuleDeleter {
     private void initialize() {
         rulesList.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
         List<String> list = Main.getStringRules();
-        rulesList.getItems().addAll(list); // Populate data here
+        for (int i = 0; i < list.size(); i++) {
+            String s = list.get(i).replace(',', '\n');
+            String s2 = s.replace("\"", "");
+            list.set(i, s2);
+        }
+        rulesList.getItems().addAll(list);
     }
 
     public void deleteRule() {

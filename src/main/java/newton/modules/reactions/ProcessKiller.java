@@ -52,7 +52,7 @@ public class ProcessKiller implements IReaction {
         }
     }
 
-    private static List<Long> getPidsByName(String processName, String os) throws IOException, InterruptedException {
+    public static List<Long> getPidsByName(String processName, String os) throws IOException, InterruptedException {
         if (os.contains("win")) {
             return getWindowsPids(processName);
         } else {
@@ -120,7 +120,7 @@ public class ProcessKiller implements IReaction {
         return pids;
     }
 
-    private static void killProcess(long pid) throws IOException, InterruptedException {
+    public static void killProcess(long pid) throws IOException, InterruptedException {
         // Reuse the killProcess method from the PID-based solution
         String os = System.getProperty("os.name").toLowerCase();
         ProcessBuilder processBuilder;

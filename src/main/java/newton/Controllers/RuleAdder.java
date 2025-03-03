@@ -82,6 +82,8 @@ public class RuleAdder {
         triggersVariablesLists.put("BatteryConsumptionTrigger", new ArrayList<>());
         triggersVariablesLists.get("BatteryConsumptionTrigger").add("levelOfConsumption");
 
+        triggersVariablesLists.put("WindowContainingWordTrigger", new ArrayList<>());
+        triggersVariablesLists.get("WindowContainingWordTrigger").add("targetWord");
 
 
         reactionsVariablesLists.put("Notification", new ArrayList<>());
@@ -102,6 +104,11 @@ public class RuleAdder {
 
         reactionsVariablesLists.put("DeviceShutDown", new ArrayList<>());
 
+        reactionsVariablesLists.put("FileCloser", new ArrayList<>());
+        reactionsVariablesLists.get("FileCloser").add("filePath");
+
+        reactionsVariablesLists.put("VolumeController", new ArrayList<>());
+        reactionsVariablesLists.get("VolumeController").add("volumeLevel");
 
 
         triggerAdder.setTriggersVariablesLists(triggersVariablesLists);

@@ -28,6 +28,7 @@ you are the batman, it is the robbin.
 - adjust brightness
 - shutdown your device
 
+---
 ```a relation between a trigger(or more) and a reaction(or more) is called a Rule```
 
 > if you are a developer, and you have some experience with java,
@@ -45,8 +46,8 @@ You might need to check out the [TODO](./TODO.md) file to be able to help us imp
 
 ## how is that useful : 
 - I want a notification every 15 minutes to remind me to stretch my back
-- or If you want to close epic games if your CPU usage is bigger than 90 % 
-- You want to execute a command every time you open you device 
+- or If you want to close a game if your CPU usage is bigger than 90 % 
+- You want to execute a command every time you open your device 
 - You might want to reduce brightness at night to sleep well
 
 it's flexible so you can do whatever you want with it 

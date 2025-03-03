@@ -29,10 +29,13 @@ public class TriggerBuilder {
         else if (triggerType.equals("BatteryConsumptionTrigger")) {
             buildBatteryConsumptionTrigger(variables);
         }
+        else if (triggerType.equals("WindowContainingWordTrigger")) {
+            return buildWindowContainingWordTrigger(variables);
+        }
         return null; //should never happen though
     }
 
-    private static ITrigger buildTimeTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
+    public static ITrigger buildTimeTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
         //check the input validity
         try{
             LocalDateTime x = LocalDateTime.parse(variables.get("startTime"));
@@ -45,14 +48,14 @@ public class TriggerBuilder {
         }
     }
 
-    private static ITrigger buildMachineStartTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
+    public static ITrigger buildMachineStartTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
         if(!variables.isEmpty())
             throw new IllegalArgumentException("Machine Start Trigger doesn't have variables");
         return new MachineStartTrigger();
     }
 
 
-    private static ITrigger buildMemoryConsumptionTrigger(HashMap<String, String> variables){
+    public static ITrigger buildMemoryConsumptionTrigger(HashMap<String, String> variables){
         if(variables.isEmpty())
             throw new IllegalArgumentException("Memory Consumption Trigger has empty level of Consumption");
         int levelOfConsumption = Integer.parseInt(variables.get("levelOfConsumption"));
@@ -63,7 +66,7 @@ public class TriggerBuilder {
     }
 
 
-    private static ITrigger buildCPUConsumptionTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
+    public static ITrigger buildCPUConsumptionTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
         if(variables.isEmpty())
             throw new IllegalArgumentException("CPU Consumption Trigger has empty level of Consumption");
         int levelOfConsumption = Integer.parseInt(variables.get("levelOfConsumption"));
@@ -73,7 +76,7 @@ public class TriggerBuilder {
         return new CPUConsumptionTrigger(levelOfConsumption);
     }
 
-    private static ITrigger buildDiskConsumptionTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
+    public static ITrigger buildDiskConsumptionTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
         if(variables.isEmpty()) throw new IllegalArgumentException("Disk consumption Trigger has empty level of Consumption");
         int levelOfConsumption = Integer.parseInt(variables.get("levelOfConsumption"));
         if(levelOfConsumption < 0 || levelOfConsumption > 100)
@@ -82,7 +85,7 @@ public class TriggerBuilder {
         return new DiskConsumptionTrigger(levelOfConsumption);
     }
 
-    private static ITrigger buildBatteryConsumptionTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
+    public static ITrigger buildBatteryConsumptionTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
         if(variables.isEmpty()) throw new IllegalArgumentException("Battery Consumption Trigger has an empty level");
         int levelOfConsumption = Integer.parseInt(variables.get("levelOfConsumption"));
         if(levelOfConsumption < 0 || levelOfConsumption > 100)
@@ -91,6 +94,10 @@ public class TriggerBuilder {
         return new BatteryConsumptionTrigger(levelOfConsumption);
     }
 
-
+    public static ITrigger buildWindowContainingWordTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
+        if(variables.isEmpty())
+            throw new IllegalArgumentException("Window Containing Word Trigger has empty variables");
+        return new WindowContainingWordTrigger(variables.get("targetWord"));
+    }
 
 }

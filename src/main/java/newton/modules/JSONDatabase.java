@@ -9,7 +9,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import newton.interfaces.IDatabase;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,33 +103,5 @@ public class JSONDatabase implements IDatabase {
 
     }
 
-    static String prayerTimesFilePath = "PrayerTimes";
-    public void updatePrayerTimes(List<String> prayerTimes) {
 
-        File file = new File(prayerTimesFilePath);
-        if(!file.exists() || file.length() == 0){return;}
-
-        try {
-            mapper.writeValue(file, prayerTimes);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public String getPrayerTime(PrayerTime prayerTime) {
-        File file = new File(prayerTimesFilePath);
-        if(!file.exists() || file.length() == 0){
-            return "";
-        }
-
-        List<String> prayerTimes = new ArrayList<>();
-        try{
-            prayerTimes = mapper.readValue(file, new TypeReference<List<String>> () {});
-            return prayerTimes.get(prayerTime.ordinal());
-        }
-        catch (Exception e){
-            System.out.println("couldn't deserialize prayerTimes");
-            return "";
-        }
-    }
 }

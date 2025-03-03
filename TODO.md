@@ -10,19 +10,19 @@
 - [x] As a user i want the reaction can push a notification
 - [x] reaction can kill a process 
 - [x] GUI
-- [x] trigger can be resources usage related @islam
+- [x] trigger can be resources usage related 
 - [x] a reaction that can adjust screen brightness
+- [x] documentation
 
 
 ## Future tasks
-- [ ] documentation
 - [ ] a trigger  that can be mic input level related
 - [ ] a trigger  that can be application usage time
 - [ ] a reaction that can adjust the sound volume
 - [ ] a reaction that can turn on/off a screen monitor
 - [ ] a reaction that can close a window with it's title containing some word
-- [ ] a reaction that can close a window @islam
-- [ ] keystroke triggers @pxlman
+- [ ] a reaction that can close a window 
+- [ ] keystroke triggers
 - [ ] add Hijri Time trigger
 - [ ] Prayer Times
 - [ ] play Azan sound 

@@ -5,6 +5,7 @@ import newton.modules.reactions.*;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 public class RactionBuilder {
     public static IReaction build(String reactionType, HashMap<String, String> variables) throws IllegalArgumentException {
@@ -26,6 +27,12 @@ public class RactionBuilder {
             }
             else if (reactionType.equals("DeviceShutDown")){
                 return buildDeviceShutDown(variables);
+            }
+            else if (reactionType.equals("FileCloser")){
+                return buildFileCloser(variables);
+            }
+            else if (reactionType.equals("VolumeController")){
+                return buildVolumeController(variables);
             }
             else{
                 return null;
@@ -67,8 +74,14 @@ public class RactionBuilder {
         if(variables.isEmpty()){
             throw new IllegalArgumentException("Empty variables");
         }
-        String process = variables.get("processName");
-        return new ProcessKiller(process);
+        String processName = variables.get("processName");
+        String os = System.getProperty("os.name").toLowerCase();
+        try {
+            List<Long> pids = ProcessKiller.getPidsByName(processName, os);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Invalid process name");
+        }
+        return new ProcessKiller(processName);
     }
 
     public static IReaction buildBrightnessController(HashMap<String, String> variables) throws IllegalArgumentException {
@@ -82,6 +95,27 @@ public class RactionBuilder {
     public static IReaction buildDeviceShutDown(HashMap<String, String> variables) throws IllegalArgumentException {
         return new DeviceShutDown();
     }
+
+    public static IReaction buildFileCloser(HashMap<String, String> variables) throws IllegalArgumentException {
+        if(variables.isEmpty())
+            throw new IllegalArgumentException("Empty variables");
+
+        if(!isValidFilePath(variables.get("filePath")))
+            throw new IllegalArgumentException("Invalid file path");
+
+        return new FileCloser(variables.get("filePath"));
+    }
+
+    public static IReaction buildVolumeController(HashMap<String, String> variables) throws IllegalArgumentException {
+        if(variables.isEmpty())
+            throw new IllegalArgumentException("Empty variables");
+        int volumeLevel = Integer.parseInt(variables.get("volumeLevel"));
+        if(volumeLevel < 0 || volumeLevel > 100){
+            throw new IllegalArgumentException("Invalid volume level");
+        }
+        return new VolumeController(volumeLevel);
+    }
+
 
     private static boolean isValidFilePath(String path) {
         if (path == null || path.isEmpty())

@@ -5,12 +5,12 @@
 - Database 
 - Builders
 - Main class 
-- reactions :
+- `reactions` :
   - Notification 
   - Process killer 
   - device shut down
-
-- triggers : 
+  - Volume controller
+- `triggers` : 
   - Time Trigger
   - Battery consumption 
   - memory consumption
@@ -20,7 +20,6 @@
 - Json database 
 - Rule calss 
 - documentation
-
 
 ## Ahmed ahsraf : 
 - interfaces 
