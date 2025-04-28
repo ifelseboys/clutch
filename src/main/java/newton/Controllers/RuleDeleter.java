@@ -70,3 +70,20 @@ public class RuleDeleter {
 //[{"id":0,"start_life":[2025,3,1,6,27,33,243956800],"expirationDate":[999999999,12,31,23,59,59,999999999],"triggers":[{"type":"machineStart"}],"reactions":[{"type":"notification","title":"title","message":"message"}],"idCounter":2},{"id":1,"start_life":[2025,3,1,6,49,37,434391700],"expirationDate":[999999999,12,31,23,59,59,999999999],"triggers":[{"type":"machineStart"}],"reactions":[{"type":"commandExecutor","command":"notepad"}],"idCounter":2}]
 
 }
+
+
+/*
+*
+jpackage --input target/ \
+         --name MyApp \
+         --main-jar myapp.jar \
+         --main-class com.example.MainApp \
+         --type exe \
+         --icon src/main/resources/icon.ico \
+         --dest output/
+
+
+
+
+
+* */

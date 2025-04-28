@@ -4,10 +4,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import newton.modules.JSONDatabase;
 import newton.modules.Rule;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -22,10 +22,15 @@ public class Main extends Application {
         thread.start();
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainWindow.fxml"));
         Parent root = fxmlLoader.load();
+
+        // Icon stuff
+        Image icon = new Image(getClass().getResourceAsStream("logo.jpg"));
+        stage.getIcons().add(icon);
+
         Scene scene = new Scene(root);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
         stage.setScene(scene);
-        stage.setTitle("Reactron");
+        stage.setTitle("Clutch");
         stage.show();
     }
 
@@ -74,6 +79,13 @@ public class Main extends Application {
         return database.getStringRules();
     }
 }
-
-
-
+/*
+jpackage --input target/ \
+        --name Clutch \
+        --main-jar myapp.jar \
+        --main-class com.example.MainApp \
+        --type exe \  # For Windows, use 'deb' for Linux
+          --runtime-image path/to/runtime \
+        --icon src/main/resources/icon.ico \
+        --dest output/
+*/
