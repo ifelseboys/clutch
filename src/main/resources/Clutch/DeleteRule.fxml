@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="584.0" prefWidth="662.0" xmlns="http://javafx.com/javafx/17.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Clutch.Controllers.RuleDeleter">
+   <children>
+      <ListView fx:id="rulesList" layoutX="67.0" layoutY="14.0" prefHeight="330.0" prefWidth="529.0" />
+      <Button layoutX="239.0" layoutY="375.0" mnemonicParsing="false" onAction="#deleteRule" prefHeight="70.0" prefWidth="184.0" text="Delete Rule(s)">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="14.0" layoutY="468.0" mnemonicParsing="false" onAction="#backToMain" prefHeight="57.0" prefWidth="211.0" text="Back to home page" />
+   </children>
+</AnchorPane>
