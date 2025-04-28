@@ -1,8 +1,5 @@
 package newton.Controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,17 +40,28 @@ public class RuleDeleter {
                 i--;
             }
             catch(Exception e){
-                SceneManager.showError("deletion error", "something went wrong with deletion");
+                SceneManager.showError("deletion error", e.getMessage());
                 return;
             }
         }
         SceneManager.showSuccess("Success", "Rules deleted successfully");
     }
 
-    private int extractID(String selectedItem) throws JsonProcessingException {
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode = mapper.readTree(selectedItem);
-        return rootNode.get("id").asInt();
+    private int extractID(String selectedItem) throws Exception {
+        //look for the word id
+        for(int i=0; i<selectedItem.length() - 1; i++){
+            if(selectedItem.charAt(i)=='i' && selectedItem.charAt(i+1)=='d'){ //found!
+                //now let's talk about the id itself as a number reperesented as a string
+                String number = new String("");
+                for(int j = i + 3; j<selectedItem.length(); j++){ //let's  continue adding the numbers until we find a \n or space
+                    if(selectedItem.charAt(j)=='\n' || selectedItem.charAt(j)==' '){
+                        return Integer.parseInt(number); //in that case return that number as an integer
+                    }
+                    number += selectedItem.charAt(j);
+                }
+            }
+        }
+        throw new Exception("ID extraction failed!");
     }
 
     public void backToMain(ActionEvent actionEvent) {

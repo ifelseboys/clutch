@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import newton.interfaces.IDatabase;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.List;
 public class JSONDatabase implements IDatabase {
     private File file;
     ObjectMapper mapper = new ObjectMapper();
-    private String filePath = "JSONDatabase.json";
+    private String filePath = "src/main/resources/newton/Configuration.json";
 
     public JSONDatabase() {
         file = new File(filePath); //open the json file
@@ -86,7 +85,7 @@ public class JSONDatabase implements IDatabase {
 
         try {
             // Read the JSON array as a list of JsonNode objects
-            JsonNode rootNode = mapper.readTree(new File("JSONDatabase.json"));
+            JsonNode rootNode = mapper.readTree(new File("src/main/resources/newton/Configuration.json"));
             List<String> ruleStrings = new ArrayList<>();
 
             if (rootNode.isArray()) {

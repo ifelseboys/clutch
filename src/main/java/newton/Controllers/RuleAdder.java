@@ -13,6 +13,8 @@ import newton.Main;
 import newton.interfaces.IReaction;
 import newton.interfaces.ITrigger;
 import newton.modules.Rule;
+import newton.modules.reactions.DeviceShutDown;
+import newton.modules.triggers.TimeTrigger;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -35,7 +37,6 @@ public class RuleAdder {
 
     private static Stage stage;
     private static Parent addRulefxmlFile;
-
 
 
 
@@ -172,7 +173,6 @@ public class RuleAdder {
 
     public void addReaction(ActionEvent event){
         //if the user has entere something and don't want to you know
-
         try{
             reactions.add(reactionAdder.getReaction());
             SceneManager.showSuccess("Done", "A reaction has been added successfully");
@@ -208,8 +208,20 @@ public class RuleAdder {
             return;
         }
 
-        //create the
-        // rule and add it to the memory and the database
+        for(IReaction reaction : reactions){
+            if(reaction instanceof DeviceShutDown){
+                for (ITrigger trigger : triggers) {
+                    if(trigger instanceof TimeTrigger){
+                        if(((TimeTrigger) trigger).getRepeatingInterval() != 0){
+                            SceneManager.showError("Shut down issue !", "you can not put a repeating trigger to shut down you device !");
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+
+        //create the rule and add it to the memory and the database
         Rule rule = new Rule(startLine, expirationDate, triggers, reactions);
         Main.addRule(rule);
         //change the scene

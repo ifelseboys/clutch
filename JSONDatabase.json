@@ -1,1 +1,0 @@
-[{"id":0,"start_life":[2025,3,2,13,16,25,348030200],"expirationDate":[999999999,12,31,23,59,59,999999999],"triggers":[{"type":"MemoryConsumptionTrigger","levelOfConsumption":80}],"reactions":[{"type":"notification","title":"title","message":"message"}],"idCounter":1}]

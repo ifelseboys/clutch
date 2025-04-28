@@ -75,6 +75,7 @@ public class Rule {
 
 
 	public void apply(){
+
 		// Check if a trigger is not true to return
 		for(ITrigger trigger : triggers){
 			if(!trigger.checkTrigger()){
