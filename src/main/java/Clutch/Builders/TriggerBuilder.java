@@ -37,7 +37,10 @@ public class TriggerBuilder {
         try{
             LocalDateTime x = LocalDateTime.parse(variables.get("startTime"));
             TimeUnit y = TimeUnit.valueOf(variables.get("repeatingUnit"));
-            int z = Integer.parseInt(variables.get("repeatingInterval"));
+            Integer z = Integer.parseInt(variables.get("repeatingInterval"));
+            if(z != null && z <= 0)
+                throw new IllegalArgumentException("repeating Interval must be greater than zero");
+
             return new TimeTrigger(x,y,z);
         }
         catch(Exception e){
@@ -55,7 +58,8 @@ public class TriggerBuilder {
     public static ITrigger buildMemoryConsumptionTrigger(HashMap<String, String> variables){
         if(variables.isEmpty())
             throw new IllegalArgumentException("Memory Consumption Trigger has empty level of Consumption");
-        int levelOfConsumption = Integer.parseInt(variables.get("levelOfConsumption"));
+
+        Integer levelOfConsumption = Integer.parseInt(variables.get("levelOfConsumption"));
         if(levelOfConsumption < 0 || levelOfConsumption > 100)
             throw new IllegalArgumentException("level of Consumption should be between 0 and 100");
 
@@ -66,7 +70,7 @@ public class TriggerBuilder {
     public static ITrigger buildCPUConsumptionTrigger(HashMap<String, String> variables) throws IllegalArgumentException {
         if(variables.isEmpty())
             throw new IllegalArgumentException("CPU Consumption Trigger has empty level of Consumption");
-        int levelOfConsumption = Integer.parseInt(variables.get("levelOfConsumption"));
+        Integer levelOfConsumption = Integer.parseInt(variables.get("levelOfConsumption"));
         if(levelOfConsumption < 0 || levelOfConsumption > 100)
             throw new IllegalArgumentException("level of Consumption should be between 0 and 100");
 

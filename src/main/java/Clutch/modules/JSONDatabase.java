@@ -15,7 +15,7 @@ import java.util.List;
 public class JSONDatabase implements IDatabase {
     private File file;
     ObjectMapper mapper = new ObjectMapper();
-    private URL filePath = getClass().getResource("Configuration.json");
+    private URL filePath = JSONDatabase.class.getClassLoader().getResource("Clutch/Configuration.json");
 
     public JSONDatabase() {
         file = new File(String.valueOf(filePath)); //open the json file

@@ -221,7 +221,7 @@ public class RuleAdder {
             }
         }
 
-        //create the rule and add it to the memory and the database
+        //create the rule
         Rule rule = new Rule(startLine, expirationDate, triggers, reactions);
         Main.addRule(rule);
         //change the scene
@@ -246,3 +246,4 @@ public class RuleAdder {
 }
 
 
+//TODO : the empty repeating interval issue

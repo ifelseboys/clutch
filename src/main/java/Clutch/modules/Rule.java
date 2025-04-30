@@ -11,20 +11,23 @@ package Clutch.modules;
  */
 
 
+import Clutch.Main;
 import Clutch.interfaces.IReaction;
 import Clutch.interfaces.ITrigger;
+import Clutch.modules.reactions.RuleDeleter;
+import Clutch.modules.triggers.TimeTrigger;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Rule {
 
-	long id;
-	static long idCounter = 0;
-	LocalDateTime start_life;
-	LocalDateTime expirationDate;
-	ArrayList<ITrigger> triggers;
-	ArrayList<IReaction> reactions;
+	private long id;
+	private static long idCounter = 0;
+	private LocalDateTime start_life;
+	private LocalDateTime expirationDate;
+	private ArrayList<ITrigger> triggers;
+	private ArrayList<IReaction> reactions;
 
 
 	public Rule(LocalDateTime start_life, LocalDateTime expirationDate, ArrayList<ITrigger> triggers, ArrayList<IReaction> reactions) {
@@ -33,11 +36,20 @@ public class Rule {
 		this.triggers = triggers;
 		this.reactions = reactions;
 		id = idCounter++;
+		//by default we add a Rule that deletes the Rule at the expiration date
+		//we do this unless expiration date is infinity
+		if(!expirationDate.equals(LocalDateTime.MAX)){
+			Rule rule = new Rule(LocalDateTime.now(), LocalDateTime.MAX, new ArrayList<>(), new ArrayList<>());
+
+			ITrigger T = new TimeTrigger(expirationDate, null, 0);
+			IReaction R = new RuleDeleter((int)id, (int)rule.getId());
+			rule.triggers.add(T);
+			rule.reactions.add(R);
+			Main.addRule(rule);
+		}
 	}
 
 	public Rule(){
-		//TODO : by default we add a trigger, that it's job is to add the Rule to the data base at the start_time
-		//TODO : by default we add a trigger, that it's job is delete the Rule itself from the database
 		triggers = new ArrayList<>();
 		reactions = new ArrayList<>();
 	}
@@ -75,6 +87,8 @@ public class Rule {
 
 
 	public void apply(){
+		if(!start_life.isBefore(LocalDateTime.now())) //my time hasn't come yet shefo !
+			return;
 
 		// Check if a trigger is not true to return
 		for(ITrigger trigger : triggers){

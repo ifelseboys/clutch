@@ -135,7 +135,6 @@ public class PreciseTimePicker extends HBox {
             int finalHour = (hour == 12 ? 0 : hour) + (isAm ? 0 : 12);
 
             // Combine into LocalDateTime
-
             return LocalDateTime.of(
                     datePicker.getValue().getYear(),
                     datePicker.getValue().getMonth(),
