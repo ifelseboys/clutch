@@ -34,6 +34,9 @@ public class RactionBuilder {
             else if (reactionType.equals("VolumeController")){
                 return buildVolumeController(variables);
             }
+            else if (reactionType.equals("VerseFromQuran")){
+                return buildVerseFromQuranReaction(variables);
+            }
             else{
                 return null;
             }
@@ -116,6 +119,9 @@ public class RactionBuilder {
         return new VolumeController(volumeLevel);
     }
 
+    public static IReaction buildVerseFromQuranReaction(HashMap<String, String> variables) throws IllegalArgumentException {
+        return new VerseFromQuran();
+    }
 
     private static boolean isValidFilePath(String path) {
         if (path == null || path.isEmpty())

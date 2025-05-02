@@ -1,6 +1,5 @@
 package Clutch.interfaces;
 
-import Clutch.modules.reactions.RuleDeleter;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import Clutch.modules.triggers.*;
@@ -20,7 +19,6 @@ import Clutch.modules.triggers.*;
 		@JsonSubTypes.Type(value = DiskConsumptionTrigger.class, name = "DiskConsumptionTrigger"),
 		@JsonSubTypes.Type(value = BatteryConsumptionTrigger.class, name = "BatteryConsumptionTrigger"),
 		@JsonSubTypes.Type(value = WindowContainingWordTrigger.class, name = "WindowContainingWordTrigger"),
-		@JsonSubTypes.Type(value = RuleDeleter.class, name = "RuleDeleter")
 })
 
 public interface ITrigger {

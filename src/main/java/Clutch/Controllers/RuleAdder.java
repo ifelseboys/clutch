@@ -111,6 +111,8 @@ public class RuleAdder {
         reactionsVariablesLists.put("VolumeController", new ArrayList<>());
         reactionsVariablesLists.get("VolumeController").add("volumeLevel");
 
+        reactionsVariablesLists.put("VerseFromQuran", new ArrayList<>());
+
 
         triggerAdder.setTriggersVariablesLists(triggersVariablesLists);
         reactionAdder.setReactionsVariablesLists(reactionsVariablesLists);
@@ -189,17 +191,17 @@ public class RuleAdder {
         startLine = startLineField.getSelectedDateTime();
         expirationDate = expirationDateField.getSelectedDateTime();
 
-        boolean isexpirationDateGone = (expirationDate.compareTo(LocalDateTime.now()) < 0);
-        if(startLine == null || expirationDate == null || isexpirationDateGone){
-            SceneManager.showError("Missing Information", "Please, enter a trigger(s), a reaction(s), start time and expiration date");
+        if(startLine == null || expirationDate == null){
+            SceneManager.showError("Missing Information", "Please, enter start time and expiration date");
             return;
         }
-
-        if(!triggerAdder.areAllFieldsEmpty()) {
-            addTrigger(event);
+        boolean isexpirationDateGone = (expirationDate.compareTo(LocalDateTime.now()) < 0);
+        if(isexpirationDateGone){
+            SceneManager.showError("Is this sci-fi or somthing", "Expiration Date gone");
         }
 
-        if(!reactionAdder.areAllFieldsEmpty()) {
+        if(!triggerAdder.areAllFieldsEmpty() && !reactionAdder.areAllFieldsEmpty()) { //if the user wants to add the trigger and the reaction at once
+            addTrigger(event);
             addReaction(event);
         }
 
@@ -208,12 +210,13 @@ public class RuleAdder {
             return;
         }
 
+        //to prevent the user from putting a repeating time trigger shutdown
         for(IReaction reaction : reactions){
             if(reaction instanceof DeviceShutDown){
                 for (ITrigger trigger : triggers) {
                     if(trigger instanceof TimeTrigger){
-                        if(((TimeTrigger) trigger).getRepeatingInterval() != 0){
-                            SceneManager.showError("Shut down issue !", "you can not put a repeating trigger to shut down you device !");
+                        if(((TimeTrigger) trigger).getRepeatingInterval() != null){
+                            SceneManager.showError("Shut down issue !", "you can not put a repeating trigger to shut down your device !");
                             return;
                         }
                     }
@@ -244,6 +247,3 @@ public class RuleAdder {
         stage = s;
     }
 }
-
-
-//TODO : the empty repeating interval issue

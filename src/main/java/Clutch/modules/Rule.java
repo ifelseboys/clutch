@@ -5,17 +5,9 @@ package Clutch.modules;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
-/**
- *
- * @author pxlman
- */
-
-
 import Clutch.Main;
 import Clutch.interfaces.IReaction;
 import Clutch.interfaces.ITrigger;
-import Clutch.modules.reactions.RuleDeleter;
-import Clutch.modules.triggers.TimeTrigger;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -36,17 +28,6 @@ public class Rule {
 		this.triggers = triggers;
 		this.reactions = reactions;
 		id = idCounter++;
-		//by default we add a Rule that deletes the Rule at the expiration date
-		//we do this unless expiration date is infinity
-		if(!expirationDate.equals(LocalDateTime.MAX)){
-			Rule rule = new Rule(LocalDateTime.now(), LocalDateTime.MAX, new ArrayList<>(), new ArrayList<>());
-
-			ITrigger T = new TimeTrigger(expirationDate, null, 0);
-			IReaction R = new RuleDeleter((int)id, (int)rule.getId());
-			rule.triggers.add(T);
-			rule.reactions.add(R);
-			Main.addRule(rule);
-		}
 	}
 
 	public Rule(){
@@ -87,8 +68,13 @@ public class Rule {
 
 
 	public void apply(){
-		if(!start_life.isBefore(LocalDateTime.now())) //my time hasn't come yet shefo !
+		if(!start_life.isBefore(LocalDateTime.now())) //I am not even born yet !
 			return;
+
+		if(expirationDate.isBefore(LocalDateTime.now())){ //my time has come
+			Main.deleteRule((int) id);
+			return;
+		}
 
 		// Check if a trigger is not true to return
 		for(ITrigger trigger : triggers){
@@ -96,6 +82,7 @@ public class Rule {
 				return;
 			}
 		}
+
 		// if the constraints are okay then run the reactions
 		for(IReaction reaction: reactions){
 			reaction.react();

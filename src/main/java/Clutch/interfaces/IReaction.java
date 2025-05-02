@@ -1,14 +1,7 @@
 package Clutch.interfaces;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
-
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import Clutch.modules.reactions.*;
-
 
 @JsonTypeInfo(
 		use = JsonTypeInfo.Id.NAME,
@@ -17,7 +10,8 @@ import Clutch.modules.reactions.*;
 )
 
 //tell json about the reactions
-@JsonSubTypes({
+@JsonSubTypes(
+{
 		@JsonSubTypes.Type(value = CommandExecutor.class, name = "commandExecutor"),
 		@JsonSubTypes.Type(value = FileOpener.class, name = "fileOpener"),
 		@JsonSubTypes.Type(value = Notification.class, name = "notification"),
@@ -25,7 +19,8 @@ import Clutch.modules.reactions.*;
 		@JsonSubTypes.Type(value =  BrightnessController.class, name = "BrightnessController"),
 		@JsonSubTypes.Type(value = DeviceShutDown.class, name = "DeviceShutDown"),
 		@JsonSubTypes.Type(value = FileCloser.class, name = "FileCloser"),
-		@JsonSubTypes.Type(value = VolumeController.class, name = "VolumeController")
+		@JsonSubTypes.Type(value = VolumeController.class, name = "VolumeController"),
+		@JsonSubTypes.Type(value = VerseFromQuran.class, name = "VerseFromQuran")
 }
 )
 

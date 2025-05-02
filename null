@@ -1,1 +1,0 @@
-[{"id":0,"start_life":[2025,4,30,21,23,25,624985900],"expirationDate":[999999999,12,31,23,59,59,999999999],"triggers":[{"type":"time","startTime":[2025,4,30,21,33,10,137219400],"repeatingUnit":"MINUTES","repeatingInterval":10}],"reactions":[{"type":"notification","title":"تذكير","message":"صل على النبي"}],"idCounter":1}]

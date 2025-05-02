@@ -1,17 +1,17 @@
 package Clutch;
+
+import Clutch.modules.JSONDatabase;
+import Clutch.modules.Rule;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import Clutch.modules.JSONDatabase;
-import Clutch.modules.Rule;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import static java.lang.Thread.sleep;
 
+import static java.lang.Thread.sleep;
 
 
 public class Main extends Application {
@@ -39,23 +39,14 @@ public class Main extends Application {
     private static JSONDatabase database = new JSONDatabase();
 
     private static void runRules() {
-        int sleepInterval = 90;
+        int sleepInterval = 100;
         while(true){
-            for(int i = 0; i < rules.size(); i++){
-                Rule rule = rules.get(i);
 
-                if(rule.getExpirationDate().isBefore(LocalDateTime.now())){
-                    rules.remove(i);
-                    i--;
-                    continue;
-                }
+            for(Rule rule : rules)
+                rule.apply();
 
-                if(rule.getStart_life().isBefore(LocalDateTime.now())){
-                    rule.apply();
-                }
-            }
 
-            try {sleep(sleepInterval);}
+            try {sleep(sleepInterval);} // be merciful with the cpu (CPUs rights matter)
             catch (InterruptedException e) {e.printStackTrace();}
         }
     }
@@ -79,7 +70,10 @@ public class Main extends Application {
     public static List<String> getStringRules(){
         return database.getStringRules();
     }
+
 }
+
+
 /*
 jpackage --input target/ \
         --name Clutch \

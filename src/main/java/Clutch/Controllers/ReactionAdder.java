@@ -76,6 +76,7 @@ public class ReactionAdder {
     public VBox getvBoxForReactionTextFields() {return vBoxForReactionTextFields;}
 
     public boolean areAllFieldsEmpty(){
+        if(reactionFields.isEmpty()){return false;}
         for(TextField field : reactionFields)
             if (!field.getText().isEmpty())
                 return false;

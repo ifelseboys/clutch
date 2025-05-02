@@ -1,8 +1,8 @@
 package Clutch.modules.reactions;
+
+import Clutch.interfaces.IReaction;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import Clutch.interfaces.IReaction;
-import javax.annotation.PostConstruct;
 
 
 @JsonTypeName("notification")
@@ -11,44 +11,29 @@ public class Notification implements IReaction {
     private String title;
     private String message;
 
-    private static String windowsCommand = "powershell.exe -Command \""
-            .concat("[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime]; ")
-            .concat("$template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02); ")
-            .concat("$texts = $template.GetElementsByTagName('text'); ")
-            .concat("$texts.Item(0).InnerText = '{0}'; ")
-            .concat("$texts.Item(1).InnerText = '{1}'; ")
-            .concat("$toast = [Windows.UI.Notifications.ToastNotification]::new($template); ")
-            .concat("$notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('Notification Script'); ")
-            .concat("$notifier.Show($toast)\"");
-
+    private String windowsCommand;
 
     public Notification() {
         title = "";
         message = "";
-        setUP();
     }
 
     public Notification(String title, String message) {
         this.title = title;
         this.message = message;
-        windowsCommand = windowsCommand.replace("{0}", title);
-        windowsCommand = windowsCommand.replace("{1}", message);
-    }
-
-    @PostConstruct
-    public void setUP(){
         if(windowsCommand == null || windowsCommand.isEmpty()){
             windowsCommand = "powershell.exe -Command \""
-                    .concat("[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime]; ")
-                    .concat("$template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02); ")
-                    .concat("$texts = $template.GetElementsByTagName('text'); ")
-                    .concat("$texts.Item(0).InnerText = '{0}'; ")
-                    .concat("$texts.Item(1).InnerText = '{1}'; ")
-                    .concat("$toast = [Windows.UI.Notifications.ToastNotification]::new($template); ")
-                    .concat("$notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('Notification Script'); ")
-                    .concat("$notifier.Show($toast)\"");
+                    + "[Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime]; "
+                    + "$template = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02); "
+                    + "$texts = $template.GetElementsByTagName('text'); "
+                    + "$texts.Item(0).InnerText = '{0}'; "
+                    + "$texts.Item(1).InnerText = '{1}'; "
+                    + "$toast = [Windows.UI.Notifications.ToastNotification]::new($template); "
+                    + "$notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('Notification Script'); "
+                    + "$notifier.Show($toast)\"";
         }
-
+        windowsCommand = windowsCommand.replace("{0}", title);
+        windowsCommand = windowsCommand.replace("{1}", message);
     }
 
     @Override
@@ -85,14 +70,10 @@ public class Notification implements IReaction {
     //getters
     public String getTitle() {return title;}
     public String getMessage() {return message;}
+    public String getWindowsCommand() {return windowsCommand;}
 
     //setters
-    public void setTitle(String title) {
-        this.title = title;
-        windowsCommand = windowsCommand.replace("{0}", title);
-    }
-    public void setMessage(String message) {
-        this.message = message;
-        windowsCommand = windowsCommand.replace("{1}", message);
-    }
+    public void setTitle(String title) {this.title = title;}
+    public void setMessage(String message) {this.message = message;}
+    public void setWindowsCommand(String windowsCommand) {this.windowsCommand = windowsCommand;}
 }

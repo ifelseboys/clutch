@@ -1,21 +1,22 @@
 package Clutch.modules;
+
 import Clutch.Controllers.SceneManager;
+import Clutch.interfaces.IDatabase;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import Clutch.interfaces.IDatabase;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 public class JSONDatabase implements IDatabase {
     private File file;
     ObjectMapper mapper = new ObjectMapper();
-    private URL filePath = JSONDatabase.class.getClassLoader().getResource("Clutch/Configuration.json");
+    private String filePath = "Configuration.json";
 
     public JSONDatabase() {
         file = new File(String.valueOf(filePath)); //open the json file
@@ -84,7 +85,7 @@ public class JSONDatabase implements IDatabase {
 
         try {
             // Read the JSON array as a list of JsonNode objects
-            JsonNode rootNode = mapper.readTree(new File(String.valueOf(filePath)));
+            JsonNode rootNode = mapper.readTree(new File(filePath));
             List<String> ruleStrings = new ArrayList<>();
 
             if (rootNode.isArray()) {
@@ -100,6 +101,6 @@ public class JSONDatabase implements IDatabase {
         }
 
     }
-
-
 }
+
+///TODO : level of consumption validation issue
