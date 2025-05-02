@@ -1,5 +1,6 @@
 package Clutch.modules.triggers;
 
+import Clutch.Main;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import Clutch.interfaces.ITrigger;
 import java.time.LocalDateTime;
@@ -24,7 +25,8 @@ public class TimeTrigger implements ITrigger {
     public boolean checkTrigger() {
         if(startTime.isBefore(LocalDateTime.now())){
             if(repeatingInterval != null){//that means it's repeating task
-                startTime = startTime.plus(repeatingInterval, repeatingUnit.toChronoUnit());
+                startTime = LocalDateTime.now().plus(repeatingInterval, repeatingUnit.toChronoUnit());
+                Main.updateRules();
             }
             return true;
         }

@@ -25,7 +25,7 @@ public class Main extends Application {
         Parent root = fxmlLoader.load();
 
         // Icon stuff
-        Image icon = new Image(getClass().getResourceAsStream("logo.jpg"));
+        Image icon = new Image(getClass().getResourceAsStream("icon.jpg"));
         stage.getIcons().add(icon);
 
         Scene scene = new Scene(root);
@@ -67,6 +67,10 @@ public class Main extends Application {
                 deleteRule(rule);
     }
 
+    public static void updateRules(){
+        database.updateRules(rules);
+    }
+
     public static List<String> getStringRules(){
         return database.getStringRules();
     }
@@ -77,10 +81,13 @@ public class Main extends Application {
 /*
 jpackage --input target/ \
         --name Clutch \
-        --main-jar myapp.jar \
-        --main-class com.example.MainApp \
-        --type exe \  # For Windows, use 'deb' for Linux
+        --main-jar Clutch-1.0-SNAPSHOT-jar-with-dependencies.jar \
+        --main-class Clutch.Main \
+        --type exe \
           --runtime-image path/to/runtime \
-        --icon src/main/resources/icon.ico \
-        --dest output/
+        --icon src\main\resources\Clutch\icon.jpg \
+        --dest installer/
 */
+
+
+//2025,5,2,23,57,43,845610800
