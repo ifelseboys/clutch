@@ -15,7 +15,6 @@ import Clutch.interfaces.ITrigger;
 import Clutch.modules.Rule;
 import Clutch.modules.reactions.DeviceShutDown;
 import Clutch.modules.triggers.TimeTrigger;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,7 +31,7 @@ public class RuleAdder {
     private ReactionAdder reactionAdder = new ReactionAdder();
 
     @FXML public void switchToMainWindow(ActionEvent event){
-        SceneManager.changeScene(event, "mainWindow.fxml");
+        SceneManager.changeScene(event, "/mainWindow.fxml");
     }
 
     private static Stage stage;
@@ -50,7 +49,7 @@ public class RuleAdder {
         newStuff.getChildren().addAll(startLineField, expirationDateField, addRulefxmlFile);
 
         Scene scene = new Scene(newStuff);
-        scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("/Style.css").toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Hamoksha");
         stage.show();
@@ -139,7 +138,7 @@ public class RuleAdder {
         VBox bigBox = new VBox(14);
         bigBox.getChildren().addAll(startLineField, expirationDateField, triggerAdder.createTriggerVBox(), reactionAdder.getvBoxForReactionTextFields(), addRulefxmlFile);
         Scene scene = new Scene(bigBox);
-        scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("/Style.css").toExternalForm());
         stage.setScene(scene);
     }
 
@@ -151,7 +150,7 @@ public class RuleAdder {
         VBox bigBox = new VBox(14);
         bigBox.getChildren().addAll(startLineField, expirationDateField, triggerAdder.getvBoxForTriggerTextFields(), reactionAdder.createReactionVBox(), addRulefxmlFile);
         Scene scene = new Scene(bigBox);
-        scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("/Style.css").toExternalForm());
         stage.setScene(scene);
     }
 
@@ -228,12 +227,12 @@ public class RuleAdder {
         Rule rule = new Rule(startLine, expirationDate, triggers, reactions);
         Main.addRule(rule);
         //change the scene
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("mainWindow.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/mainWindow.fxml"));
         SceneManager.showSuccess("Done", "A rule has been added successfully");
 
         try{
             Scene scene = new Scene(fxmlLoader.load());
-            scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
+            scene.getStylesheets().add(Main.class.getResource("/Style.css").toExternalForm());
             stage.setScene(scene);
         }
         catch (IOException e){System.err.println("Failed to load main window");}
