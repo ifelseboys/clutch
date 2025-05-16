@@ -8,11 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import java.awt.*;
+import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import static java.lang.Thread.sleep;
-
 
 public class Main extends Application {
 
@@ -21,15 +22,16 @@ public class Main extends Application {
         rules = new CopyOnWriteArrayList<>(database.getRules());
         Thread thread = new Thread(Main::runRules);
         thread.start();
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("mainWindow.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/mainWindow.fxml"));
         Parent root = fxmlLoader.load();
 
         // Icon stuff
-        Image icon = new Image(getClass().getResourceAsStream("icon.jpg"));
+        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/icon.jpg")));
         stage.getIcons().add(icon);
+        createSystemTray(); //in order to let the user exit the program after closing the gui
 
         Scene scene = new Scene(root);
-        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/Style.css")).toExternalForm());
         stage.setScene(scene);
         stage.setTitle("Clutch");
         stage.show();
@@ -75,19 +77,25 @@ public class Main extends Application {
         return database.getStringRules();
     }
 
+    public static void createSystemTray() {
+        //get the image
+        URL imageUrl = Objects.requireNonNull(Main.class.getResource("/icon.jpg"));
+        java.awt.Image icon = Toolkit.getDefaultToolkit().getImage(imageUrl);
+
+        //set up the system tray stuff
+        SystemTray tray = SystemTray.getSystemTray();
+        PopupMenu popup = new PopupMenu();
+        MenuItem exitItem = new MenuItem("Exit");
+        exitItem.addActionListener(e -> System.exit(0)); //the purpose is to close the program
+        popup.add(exitItem);
+        TrayIcon trayIcon = new TrayIcon(icon, "Clutch", popup);
+        trayIcon.setImageAutoSize(true);
+        try{
+            tray.add(trayIcon);
+        }
+        catch (AWTException e){
+            return;
+        }
+    }
 }
 
-
-/*
-jpackage --input target/ \
-        --name Clutch \
-        --main-jar Clutch-1.0-SNAPSHOT-jar-with-dependencies.jar \
-        --main-class Clutch.Main \
-        --type exe \
-          --runtime-image path/to/runtime \
-        --icon src\main\resources\Clutch\icon.jpg \
-        --dest installer/
-*/
-
-
-//2025,5,2,23,57,43,845610800

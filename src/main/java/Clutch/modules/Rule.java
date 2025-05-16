@@ -38,10 +38,10 @@ public class Rule {
 
 	//setters
 	public void setId(long id){
-		this.id = id;	
+		this.id = id;
 	}
 	public void setStartLife(LocalDateTime t){
-		this.start_life = t;	
+		this.start_life = t;
 	}
 	public void setEndLife(LocalDateTime t){
 		this.expirationDate = t;
