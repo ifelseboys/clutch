@@ -1,7 +1,6 @@
 module Clutch {
     requires javafx.controls;
     requires javafx.fxml;
-
     requires net.synedra.validatorfx;
     requires org.kordamp.bootstrapfx.core;
     requires java.annotation;
