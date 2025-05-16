@@ -27,5 +27,5 @@ public class FileOpener implements IReaction {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    } 
+    }
 }
