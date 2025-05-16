@@ -19,7 +19,7 @@ public class SceneManager {
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             RuleAdder.setStage(window);
 
-            Parent root = FXMLLoader.load(Main.class.getResource("AddRule.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource("/AddRule.fxml")));
             RuleAdder.setAddRulefxmlFile(root);
             RuleAdder.makeScene();
 
@@ -34,7 +34,7 @@ public class SceneManager {
         try {
             Parent root = FXMLLoader.load(Objects.requireNonNull(Main.class.getResource(fxmlFile)));
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(Main.class.getResource("style.css").toExternalForm());
+            scene.getStylesheets().add(Main.class.getResource("/Style.css").toExternalForm());
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(scene);
             window.show();
