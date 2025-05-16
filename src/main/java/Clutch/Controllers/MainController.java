@@ -7,6 +7,6 @@ public class MainController {
         SceneManager.switchToRuleAdder(event);
     }
     public void switchToDeleteRule(ActionEvent event){
-        SceneManager.changeScene(event, "DeleteRule.fxml");
+        SceneManager.changeScene(event, "/DeleteRule.fxml");
     }
 }
