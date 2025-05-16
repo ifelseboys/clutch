@@ -1,35 +1,53 @@
-# Newton 
+# Clutch
 
 # بسم الله الرحمن الرحيم
 
-# what does it provide ?
+# what is Clutch
+clutch is the tool that helps you control your device,
 
-- Newton is your secretary, that helps you control you computer as you wish.
-you are the batman, it is the robbin.
+deciding what happens when and why
 
-- You have the power of deciding what happens when on your device.
-- It Exists to help you gather every thing in one place instead of dozens of tools 
+He is the robbin you are the batman
+
+Clutch was made to achieve harmony between all the tasks and events that happen on you device
+just like the clutch in a car
+- clutch was made to collect dozens of tools in 1 place, instead of many tools!
 
 
 - Newton is based on the idea of **Triggers** and **Reactions**
-## Triggers : 
+## Triggers :
 
 - At startup (MachineStartTrigger)
 - TimeTriggers (repeating and non-repeating)
 - resources consumption (memory, cpu, disk, battery...etc.)
-- prayer times (coming soon  ان شاء الله )
+- a window containing some word
 
 ## Reactions:
 
+- a notification with a verse from the Holy Qur'an
 - push notifications
 - Open files
 - Close files
-- execute commands 
+- execute commands
 - adjust brightness
 - shutdown your device
 
+
+## how is Clutch useful?
+- I want a notification every 15 minutes to remind me to stretch my back
+- or If you want to close a game if your CPU usage is bigger than 90 %
+- You want to execute a command every time you open your device
+- You might want to reduce brightness at night to sleep well
+
+it's flexible so you can do whatever you want with it
+
 ---
 ```a relation between a trigger(or more) and a reaction(or more) is called a Rule```
+
+```please note that triggers are tied together with a logical AND```
+
+
+go ahead and create you own Rules!
 
 > if you are a developer, and you have some experience with java,
 OOP and design patterns, please help us have a better Newton!
@@ -40,17 +58,7 @@ to add to the project.
 
 You might need to check out the [TODO](./TODO.md) file to be able to help us improve this project.
 
-**Please, before doing anything**, check the [CONTRIBUTING](./CONTRIBUTING.md) file 
-
-
-
-## how is that useful : 
-- I want a notification every 15 minutes to remind me to stretch my back
-- or If you want to close a game if your CPU usage is bigger than 90 % 
-- You want to execute a command every time you open your device 
-- You might want to reduce brightness at night to sleep well
-
-it's flexible so you can do whatever you want with it 
+**Please, before doing anything**, check the [CONTRIBUTING](./CONTRIBUTING.md) file
 
 see full documentation [docs](./docs)
 
