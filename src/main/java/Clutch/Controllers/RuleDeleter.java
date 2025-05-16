@@ -1,5 +1,4 @@
 package Clutch.Controllers;
-
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,21 +28,27 @@ public class RuleDeleter {
     }
 
     public void deleteRule() {
+        ObservableList<String> fullList = rulesList.getItems();
         ObservableList<String> selectedItems = rulesList.getSelectionModel().getSelectedItems();
 
-        for(int i=0; i<selectedItems.size(); i++){
-            String selectedItem = selectedItems.get(i);
+        for(int i = 0; i < fullList.size(); i++){
+            String Item = fullList.get(i);
             try{
-                int id = extractID(selectedItem);
-                Main.deleteRule(id);
-                rulesList.getItems().remove(i);
-                i--;
+                if(selectedItems.contains(Item)){
+                    fullList.remove(i);
+                    int id = extractID(Item);
+                    Main.deleteRule(id);
+                    i--;
+                }
             }
             catch(Exception e){
                 SceneManager.showError("deletion error", e.getMessage());
                 return;
             }
         }
+        rulesList.getItems().remove(0, rulesList.getItems().size()); //remove the whole list
+        rulesList.getItems().addAll(fullList); //add the non-deleted list
+//        rulesList.getSelectionModel().clearSelection();
         SceneManager.showSuccess("Success", "Rules deleted successfully");
     }
 
@@ -65,25 +70,8 @@ public class RuleDeleter {
     }
 
     public void backToMain(ActionEvent actionEvent) {
-        SceneManager.changeScene(actionEvent, "mainWindow.fxml");
+        SceneManager.changeScene(actionEvent, "/mainWindow.fxml");
     }
 //[{"id":0,"start_life":[2025,3,1,6,27,33,243956800],"expirationDate":[999999999,12,31,23,59,59,999999999],"triggers":[{"type":"machineStart"}],"reactions":[{"type":"notification","title":"title","message":"message"}],"idCounter":2},{"id":1,"start_life":[2025,3,1,6,49,37,434391700],"expirationDate":[999999999,12,31,23,59,59,999999999],"triggers":[{"type":"machineStart"}],"reactions":[{"type":"commandExecutor","command":"notepad"}],"idCounter":2}]
 
 }
-
-
-/*
-*
-jpackage --input target/ \
-         --name MyApp \
-         --main-jar myapp.jar \
-         --main-class com.example.MainApp \
-         --type exe \
-         --icon src/main/resources/icon.ico \
-         --dest output/
-
-
-
-
-
-* */
