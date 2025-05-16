@@ -1,0 +1,9 @@
+module:Clutch
+Clutch
+Clutch.Builders
+Clutch.Controllers
+Clutch.FXCustomClasses
+Clutch.interfaces
+Clutch.modules
+Clutch.modules.reactions
+Clutch.modules.triggers

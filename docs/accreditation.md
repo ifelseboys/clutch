@@ -10,16 +10,21 @@
   - Process killer 
   - device shut down
   - Volume controller
+  - Verse from Qur'an 
+  - File closer
+  - brightness controller
 - `triggers` : 
   - Time Trigger
   - Battery consumption 
   - memory consumption
   - disk consumption
-  - cpu consumption 
+  - cpu consumption
+  - window containing word
 
 - Json database 
-- Rule calss 
+- Rule class
 - documentation
+- EXE file and release
 
 ## Ahmed ahsraf : 
 - interfaces 
