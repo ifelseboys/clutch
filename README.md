@@ -5,7 +5,7 @@
 # what is Clutch
 Clutch is the tool that helps you control your device, deciding what happens when and why.
 
-He is the robbin you are the batman.
+He is the Robbin you are the Batman.
 
 Clutch was made to achieve harmony between all the tasks and events that happen on you device.
 just like the clutch in a car.
