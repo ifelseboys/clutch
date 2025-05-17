@@ -25,10 +25,10 @@ when all of the triggers happen, reactions are performed to your device.
 ## Reactions:
 
 - a notification with a verse from the Holy Qur'an
-- push notifications
-- Open files
-- Close files
-- execute commands
+- push a notification
+- Open a file
+- Close a file
+- execute a command
 - adjust brightness
 - shutdown your device
 
