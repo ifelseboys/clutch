@@ -3,7 +3,7 @@
 # بسم الله الرحمن الرحيم
 
 # what is Clutch
-clutch is the tool that helps you control your device,
+Clutch is the tool that helps you control your device,
 
 deciding what happens when and why
 
@@ -11,10 +11,10 @@ He is the robbin you are the batman
 
 Clutch was made to achieve harmony between all the tasks and events that happen on you device
 just like the clutch in a car
-- clutch was made to collect dozens of tools in 1 place, instead of many tools!
+- Clutch was made to collect dozens of tools in 1 place, instead of many tools!
 
 
-- Newton is based on the idea of **Triggers** and **Reactions**
+- Clutch is based on the idea of **Triggers** and **Reactions**
 ## Triggers :
 
 - At startup (MachineStartTrigger)
@@ -50,7 +50,7 @@ it's flexible so you can do whatever you want with it
 go ahead and create you own Rules!
 
 > if you are a developer, and you have some experience with java,
-OOP and design patterns, please help us have a better Newton!
+OOP and design patterns, please help us have a better Clutch!
 It was made with care specifically to be **easy to expand**.
 
 As long as you write *safe and tested code*, you more than welcomed
