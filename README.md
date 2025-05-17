@@ -3,18 +3,17 @@
 # بسم الله الرحمن الرحيم
 
 # what is Clutch
-Clutch is the tool that helps you control your device,
+Clutch is the tool that helps you control your device, deciding what happens when and why
 
-deciding what happens when and why
-
-He is the robbin you are the batman
+He is the robbin you are the batman>
 
 Clutch was made to achieve harmony between all the tasks and events that happen on you device
-just like the clutch in a car
-- Clutch was made to collect dozens of tools in 1 place, instead of many tools!
+just like the clutch in a car.
+- it was made to collect dozens of tools in 1 place, instead of many tools!
 
 
 - Clutch is based on the idea of **Triggers** and **Reactions**
+
 ## Triggers :
 
 - At startup (MachineStartTrigger)
@@ -32,6 +31,7 @@ just like the clutch in a car
 - adjust brightness
 - shutdown your device
 
+```a relation between a trigger(or more) and a reaction(or more) is called a Rule```
 
 ## how is Clutch useful?
 - I want a notification every 15 minutes to remind me to stretch my back
@@ -42,7 +42,7 @@ just like the clutch in a car
 it's flexible so you can do whatever you want with it
 
 ---
-```a relation between a trigger(or more) and a reaction(or more) is called a Rule```
+
 
 ```please note that triggers are tied together with a logical AND```
 
