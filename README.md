@@ -9,10 +9,10 @@ He is the robbin you are the batman.
 
 Clutch was made to achieve harmony between all the tasks and events that happen on you device.
 just like the clutch in a car.
-- it was made to collect dozens of tools in 1 place, instead of many tools!
+it was made to collect dozens of tools in 1 place, instead of many tools!
 
 
-- Clutch is based on the idea of **Triggers** and **Reactions**
+Clutch is based on the idea of **Triggers** and **Reactions**
 
 when all of the triggers happen, reactions are performed to your device.
 ## Triggers :
