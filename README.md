@@ -3,17 +3,18 @@
 # بسم الله الرحمن الرحيم
 
 # what is Clutch
-Clutch is the tool that helps you control your device, deciding what happens when and why
+Clutch is the tool that helps you control your device, deciding what happens when and why.
 
-He is the robbin you are the batman>
+He is the robbin you are the batman.
 
-Clutch was made to achieve harmony between all the tasks and events that happen on you device
+Clutch was made to achieve harmony between all the tasks and events that happen on you device.
 just like the clutch in a car.
 - it was made to collect dozens of tools in 1 place, instead of many tools!
 
 
 - Clutch is based on the idea of **Triggers** and **Reactions**
 
+when all of the triggers happen, reactions are performed to your device.
 ## Triggers :
 
 - At startup (MachineStartTrigger)
