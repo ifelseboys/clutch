@@ -10,6 +10,7 @@ module Clutch {
     requires java.net.http;
     requires com.github.oshi;
     requires java.sql;
+    requires com.sun.jna.platform;
 
     opens Clutch to javafx.fxml;
     opens Clutch.modules to com.fasterxml.jackson.databind;

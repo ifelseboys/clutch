@@ -1,15 +1,16 @@
 package Clutch.modules.reactions;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import Clutch.interfaces.IReaction;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-@JsonTypeName("ProcessKiller")
+@JsonTypeName("FileCloser")
 public class FileCloser implements IReaction {
 
     String filePath;
@@ -33,6 +34,7 @@ public class FileCloser implements IReaction {
         catch(Exception e){
             throw new RuntimeException(e);
         }
+
     }
 
     private static List<Long> getUnixPids(String filePath) throws IOException, InterruptedException {
@@ -66,22 +68,25 @@ public class FileCloser implements IReaction {
 
 
     private static List<Long> getWindowsPids(String filePath) throws IOException, InterruptedException {
-        List<Long> pids = new ArrayList<>();
-        ProcessBuilder pb = new ProcessBuilder("handle.exe", "-nobanner", filePath);
+        Set<Long> pids = new HashSet<>(); // Use Set to avoid duplicates
+        // Include -accepteula to prevent EULA prompts on first run
+        ProcessBuilder pb = new ProcessBuilder("Handle/handle.exe", "-nobanner", "-accepteula", filePath);
         pb.redirectErrorStream(true);
         Process p = pb.start();
+
+        // Regex to match "pid: 1234" or "pid:1234" anywhere in the line
+        Pattern pidPattern = Pattern.compile("pid:\\s*(\\d+)");
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                line = line.trim();
-                if (line.startsWith("pid:")) {
-                    String[] parts = line.split("\\s+");
+                Matcher matcher = pidPattern.matcher(line.trim());
+                if (matcher.find()) {
                     try {
-                        long pid = Long.parseLong(parts[1].replace("pid:", ""));
+                        long pid = Long.parseLong(matcher.group(1));
                         pids.add(pid);
                     } catch (NumberFormatException e) {
-                        // Ignore invalid lines
+                        // Ignore invalid PID formats
                     }
                 }
             }
@@ -89,9 +94,13 @@ public class FileCloser implements IReaction {
 
         int exitCode = p.waitFor();
         if (exitCode != 0) {
-            throw new IOException("Failed to list processes holding the file. Exit code: " + exitCode);
+            throw new IOException(
+                    "Failed to list processes. Exit code: " + exitCode +
+                            ". Ensure handle.exe is installed and accessible."
+            );
         }
-        return pids;
+
+        return new ArrayList<>(pids); // Return unique PIDs as a List
     }
 
 
