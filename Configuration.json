@@ -1,0 +1,1 @@
+[{"id":0,"start_life":[2025,5,19,8,50,41,828781500],"expirationDate":[999999999,12,31,23,59,59,999999999],"triggers":[{"type":"time","startTime":[2025,5,19,8,51,11,959727400],"repeatingUnit":"SECONDS","repeatingInterval":10}],"reactions":[{"type":"notification","title":"title","message":"message"}],"idCounter":1}]

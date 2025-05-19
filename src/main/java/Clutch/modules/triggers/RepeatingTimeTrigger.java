@@ -7,15 +7,15 @@ import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
 @JsonTypeName("time")
-public class TimeTrigger implements ITrigger {
+public class RepeatingTimeTrigger implements ITrigger {
 
     private LocalDateTime startTime;
     private TimeUnit repeatingUnit;
     private Integer repeatingInterval;
 
-    public TimeTrigger(){}
+    public RepeatingTimeTrigger(){}
 
-    public TimeTrigger(LocalDateTime startTime, TimeUnit repeatingUnit, Integer repeatingInterval) {
+    public RepeatingTimeTrigger(LocalDateTime startTime, TimeUnit repeatingUnit, Integer repeatingInterval) {
         this.startTime = startTime;
         this.repeatingUnit = repeatingUnit;
         this.repeatingInterval = repeatingInterval;
@@ -24,10 +24,8 @@ public class TimeTrigger implements ITrigger {
     @Override
     public boolean checkTrigger() {
         if(startTime.isBefore(LocalDateTime.now())){
-            if(repeatingInterval != null){//that means it's repeating task
-                startTime = LocalDateTime.now().plus(repeatingInterval, repeatingUnit.toChronoUnit());
-                Main.updateRules();
-            }
+            startTime = LocalDateTime.now().plus(repeatingInterval, repeatingUnit.toChronoUnit());
+            Main.updateRules(); //to be updated in the database
             return true;
         }
         return false;

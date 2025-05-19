@@ -1,5 +1,12 @@
 package Clutch.Controllers;
 
+import Clutch.FXCustomClasses.PreciseTimePicker;
+import Clutch.Main;
+import Clutch.interfaces.IReaction;
+import Clutch.interfaces.ITrigger;
+import Clutch.modules.Rule;
+import Clutch.modules.reactions.DeviceShutDown;
+import Clutch.modules.triggers.RepeatingTimeTrigger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,13 +15,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import Clutch.FXCustomClasses.PreciseTimePicker;
-import Clutch.Main;
-import Clutch.interfaces.IReaction;
-import Clutch.interfaces.ITrigger;
-import Clutch.modules.Rule;
-import Clutch.modules.reactions.DeviceShutDown;
-import Clutch.modules.triggers.TimeTrigger;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -29,6 +29,7 @@ public class RuleAdder {
     private LocalDateTime expirationDate = null;
     private TriggerAdder triggerAdder = new TriggerAdder();
     private ReactionAdder reactionAdder = new ReactionAdder();
+
 
     @FXML public void switchToMainWindow(ActionEvent event){
         SceneManager.changeScene(event, "/mainWindow.fxml");
@@ -51,7 +52,7 @@ public class RuleAdder {
         Scene scene = new Scene(newStuff);
         scene.getStylesheets().add(Main.class.getResource("/Style.css").toExternalForm());
         stage.setScene(scene);
-        stage.setTitle("Hamoksha");
+        stage.setTitle("Clutch");
         stage.show();
     }
 
@@ -62,16 +63,20 @@ public class RuleAdder {
         triggersVariablesLists = new HashMap<>();
         reactionsVariablesLists = new HashMap<>();
 
-        triggersVariablesLists.put("TimeTrigger", new ArrayList<>());
-        triggersVariablesLists.get("TimeTrigger").add("startTime");
-        triggersVariablesLists.get("TimeTrigger").add("repeatingUnit");
-        triggersVariablesLists.get("TimeTrigger").add("repeatingInterval");
+        //triggers
+        triggersVariablesLists.put("RepeatingTimeTrigger", new ArrayList<>());
+        triggersVariablesLists.get("RepeatingTimeTrigger").add("startTime");
+        triggersVariablesLists.get("RepeatingTimeTrigger").add("repeatingUnit");
+        triggersVariablesLists.get("RepeatingTimeTrigger").add("repeatingInterval");
+
+        triggersVariablesLists.put("NonRepeatingTimeTrigger", new ArrayList<>());
+        triggersVariablesLists.get("NonRepeatingTimeTrigger").add("fired");
+        triggersVariablesLists.get("NonRepeatingTimeTrigger").add("fireTime");
 
         triggersVariablesLists.put("MachineStartTrigger", new ArrayList<>());
 
         triggersVariablesLists.put("MemoryConsumptionTrigger", new ArrayList<>());
         triggersVariablesLists.get("MemoryConsumptionTrigger").add("levelOfConsumption");
-
 
         triggersVariablesLists.put("CPUConsumptionTrigger", new ArrayList<>());
         triggersVariablesLists.get("CPUConsumptionTrigger").add("levelOfConsumption");
@@ -86,6 +91,8 @@ public class RuleAdder {
         triggersVariablesLists.get("WindowContainingWordTrigger").add("targetWord");
 
 
+
+        //reactions
         reactionsVariablesLists.put("Notification", new ArrayList<>());
         reactionsVariablesLists.get("Notification").add("title");
         reactionsVariablesLists.get("Notification").add("message");
@@ -160,14 +167,15 @@ public class RuleAdder {
 
     public void addTrigger(ActionEvent event){ //the most important function
         try{
-            triggers.add(triggerAdder.getTrigger());
+            ITrigger currentTrigger = triggerAdder.getTrigger();
+            triggers.add(currentTrigger);
             SceneManager.showSuccess("Done", "A trigger has been added successfully");
         }
         catch (IllegalArgumentException e){
-            SceneManager.showError("Invalid trigger information", "Please, enter a valid trigger");
+            SceneManager.showError("Invalid trigger information", e.getMessage());
         }
         catch (Exception e){
-            SceneManager.showError("Error", "Missing information !");
+            SceneManager.showError("Error", e.getMessage());
         }
     }
 
@@ -188,13 +196,13 @@ public class RuleAdder {
     public void addRule(ActionEvent event) {
 
         startLine = startLineField.getSelectedDateTime();
-        expirationDate = expirationDateField.getSelectedDateTime();
+        expirationDate = expirationDateField.getSelectedDateTime(); //not initialized before by add trigger
 
         if(startLine == null || expirationDate == null){
             SceneManager.showError("Missing Information", "Please, enter start time and expiration date");
             return;
         }
-        boolean isexpirationDateGone = (expirationDate.compareTo(LocalDateTime.now()) < 0);
+        boolean isexpirationDateGone = (expirationDate.isBefore(LocalDateTime.now()));
         if(isexpirationDateGone){
             SceneManager.showError("Is this sci-fi or somthing", "Expiration Date gone");
         }
@@ -213,8 +221,8 @@ public class RuleAdder {
         for(IReaction reaction : reactions){
             if(reaction instanceof DeviceShutDown){
                 for (ITrigger trigger : triggers) {
-                    if(trigger instanceof TimeTrigger){
-                        if(((TimeTrigger) trigger).getRepeatingInterval() != null){
+                    if(trigger instanceof RepeatingTimeTrigger){
+                        if(((RepeatingTimeTrigger) trigger).getRepeatingInterval() != null){
                             SceneManager.showError("Shut down issue !", "you can not put a repeating trigger to shut down your device !");
                             return;
                         }
@@ -246,3 +254,5 @@ public class RuleAdder {
         stage = s;
     }
 }
+
+//TODO : if user pushes Add Trigger or add Reaction without specifying anything

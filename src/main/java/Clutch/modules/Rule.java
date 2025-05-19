@@ -1,13 +1,9 @@
 package Clutch.modules;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 import Clutch.Main;
 import Clutch.interfaces.IReaction;
 import Clutch.interfaces.ITrigger;
+import Clutch.modules.triggers.NonRepeatingTimeTrigger;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -78,6 +74,11 @@ public class Rule {
 
 		// Check if a trigger is not true to return
 		for(ITrigger trigger : triggers){
+			if(trigger instanceof NonRepeatingTimeTrigger) //delete non repeating time trigger after it being fired
+				if(((NonRepeatingTimeTrigger) trigger).isFired())
+					Main.deleteRule((int) id);
+
+
 			if(!trigger.checkTrigger()){
 				return;
 			}

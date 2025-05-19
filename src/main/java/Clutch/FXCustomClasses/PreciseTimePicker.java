@@ -1,9 +1,14 @@
 package Clutch.FXCustomClasses;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.time.LocalDateTime;
 
 
@@ -135,11 +140,12 @@ public class PreciseTimePicker extends HBox {
             int finalHour = (hour == 12 ? 0 : hour) + (isAm ? 0 : 12);
 
             // Combine into LocalDateTime
+            //check for clock shift
             return LocalDateTime.of(
                     datePicker.getValue().getYear(),
                     datePicker.getValue().getMonth(),
                     datePicker.getValue().getDayOfMonth(),
-                    finalHour,
+                    finalHour - (isClockShifted() ? 1 : 0), //the real hour would be less than what the user specified by 1 if there is a clock shift
                     minute
             );
         } catch (Exception e) {
@@ -173,6 +179,29 @@ public class PreciseTimePicker extends HBox {
             minuteField.setText(String.format("%02d", dateTime.getMinute()));
             amPmToggle.setText(dateTime.getHour() < 12 ? "AM" : "PM");
             amPmToggle.setSelected(dateTime.getHour() < 12);
+        }
+    }
+
+    public boolean isClockShifted() throws Exception {
+        Process process = null;
+        String os = System.getProperty("os.name");
+        try {
+            if(os.toLowerCase().contains("windows")) {
+                process = Runtime.getRuntime().exec("cmd /c time /T");
+            }
+            else if (os.toLowerCase().contains("linux")) {
+                process = Runtime.getRuntime().exec("date +%T");
+            }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null){
+                int windowsHour = Integer.parseInt(line.substring(0, 2));
+                return !(windowsHour == (LocalDateTime.now().getHour() % 12)); //if the system's hour is the same as the LocalDateTime then, it's not shifted
+            }
+            process.waitFor();
+            throw new Exception("couldn't know if Clock is shifted, command failed");
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 

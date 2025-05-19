@@ -47,8 +47,11 @@ public class TriggerAdder {
         vBoxForTriggerTextFields.getChildren().clear();
         vBoxForTriggerTextFields.setPadding(new Insets(0,0,0,10));
 
-        if(selectedTriggerType.equals("TimeTrigger")){
-            return createTimeTriggerVBox();
+        if(selectedTriggerType.equals("RepeatingTimeTrigger")){
+            return createRepeatingTimeTriggerVBox();
+        }
+        else if (selectedTriggerType.equals("NonRepeatingTimeTrigger")){
+            return createNonRepeatingTimeTriggerVBox();
         }
         else {
             //creat a number of text fields that equals the number of variables inside the trigger
@@ -73,10 +76,9 @@ public class TriggerAdder {
 
 
 
-    private VBox createTimeTriggerVBox(){
+    private VBox createRepeatingTimeTriggerVBox(){
         vBoxForTriggerTextFields.getChildren().clear();
         vBoxForTriggerTextFields.setPadding(new Insets(0,0,0,10));
-        //hat7ebeni walla Ato5 rohi betabanga
 
         vBoxForTriggerTextFields.getChildren().add(startTriggerField);
 
@@ -103,17 +105,28 @@ public class TriggerAdder {
         return vBoxForTriggerTextFields;
     }
 
+    private PreciseTimePicker fireTime = new PreciseTimePicker("NOW", "start time :");
+    private VBox createNonRepeatingTimeTriggerVBox(){
+        vBoxForTriggerTextFields.getChildren().clear();
+        vBoxForTriggerTextFields.setPadding(new Insets(0,0,0,10));
+        vBoxForTriggerTextFields.getChildren().add(fireTime);
+        return vBoxForTriggerTextFields;
+    }
+
 
     //this creates the trigger based on the information provided by the user and the type of trigger he chose
     public ITrigger getTrigger(){
 
         HashMap<String, String> variables = new HashMap<>();
 
-        if(selectedTriggerType.equals("TimeTrigger")){
+        if(selectedTriggerType.equals("RepeatingTimeTrigger")){
             //we are going to check over the fields we have
             variables.put("startTime", startTriggerField.getSelectedDateTime().toString());
             variables.put("repeatingUnit", repeatingUnitBox.getValue());
             variables.put("repeatingInterval", repeatingIntervalField.getText());
+        }
+        else if(selectedTriggerType.equals("NonRepeatingTimeTrigger")){
+            variables.put("fireTime", fireTime.getSelectedDateTime().toString());
         }
         else{
             //checkout the ArrayList of TextFields to see what is written
@@ -135,6 +148,7 @@ public class TriggerAdder {
             field.clear();
 
         startTriggerField.reset();
+        fireTime.reset();
         repeatingIntervalField.clear();
     }
 
@@ -142,8 +156,11 @@ public class TriggerAdder {
 
 
     public boolean areAllFieldsEmpty() {
-        if(selectedTriggerType.equals("TimeTrigger")){
+        if(selectedTriggerType.equals("RepeatingTimeTrigger")){
             return (repeatingIntervalField.getText().isEmpty() || repeatingUnitBox.getValue().isEmpty() && startTriggerField.isEmpty()) ;
+        }
+        else if (selectedTriggerType.equals("NonRepeatingTimeTrigger")){
+            return fireTime.isEmpty();
         }
         else{
             if(triggerFields.isEmpty()){return false;} //if there are no fields at all

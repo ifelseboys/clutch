@@ -12,13 +12,14 @@ import Clutch.modules.triggers.*;
 
 @JsonSubTypes({
 		//tell json about the trigger types:
-		@JsonSubTypes.Type(value = TimeTrigger.class, name = "time"),
+		@JsonSubTypes.Type(value = RepeatingTimeTrigger.class, name = "time"),
 		@JsonSubTypes.Type(value = MachineStartTrigger.class, name = "machineStart"),
 		@JsonSubTypes.Type(value = MemoryConsumptionTrigger.class, name = "MemoryConsumptionTrigger"),
 		@JsonSubTypes.Type(value = CPUConsumptionTrigger.class, name = "CPUConsumptionTrigger"),
 		@JsonSubTypes.Type(value = DiskConsumptionTrigger.class, name = "DiskConsumptionTrigger"),
 		@JsonSubTypes.Type(value = BatteryConsumptionTrigger.class, name = "BatteryConsumptionTrigger"),
 		@JsonSubTypes.Type(value = WindowContainingWordTrigger.class, name = "WindowContainingWordTrigger"),
+		@JsonSubTypes.Type(value = NonRepeatingTimeTrigger.class, name = "NonRepeatingTimeTrigger"),
 })
 
 public interface ITrigger {

@@ -9,6 +9,7 @@ module Clutch {
     requires java.desktop;
     requires java.net.http;
     requires com.github.oshi;
+    requires java.sql;
 
     opens Clutch to javafx.fxml;
     opens Clutch.modules to com.fasterxml.jackson.databind;
