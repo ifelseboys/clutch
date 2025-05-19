@@ -14,12 +14,7 @@ public class FileOpener implements IReaction {
     public FileOpener(String file_path){
         this.file_path = file_path;
     }
-    public void setFilePath(String file_path){
-        this.file_path = file_path;
-    }
-
     public FileOpener() {}
-
     public void react(){
         File file = new File(this.file_path);
         try {
@@ -28,4 +23,7 @@ public class FileOpener implements IReaction {
             e.printStackTrace();
         }
     }
+
+    public String getFile_path() {return file_path;}
+    public void setFile_path(String file_path) {this.file_path = file_path;}
 }
