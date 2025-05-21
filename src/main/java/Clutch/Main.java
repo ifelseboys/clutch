@@ -1,5 +1,4 @@
 package Clutch;
-
 import Clutch.modules.JSONDatabase;
 import Clutch.modules.Rule;
 import javafx.application.Application;
