@@ -1,0 +1,1 @@
+[{"id":0,"start_life":[2025,5,21,8,35,38,794394000],"expirationDate":[999999999,12,31,23,59,59,999999999],"triggers":[{"type":"machineStart"}],"reactions":[{"type":"FileCloser","filePath":"C:\\Users\\princ\\Documents\\test.docx"}],"idCounter":1}]

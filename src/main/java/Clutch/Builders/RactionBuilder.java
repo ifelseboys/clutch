@@ -28,9 +28,6 @@ public class RactionBuilder {
             else if (reactionType.equals("DeviceShutDown")){
                 return buildDeviceShutDown(variables);
             }
-            else if (reactionType.equals("FileCloser")){
-                return buildFileCloser(variables);
-            }
             else if (reactionType.equals("VolumeController")){
                 return buildVolumeController(variables);
             }
@@ -100,15 +97,6 @@ public class RactionBuilder {
         return new DeviceShutDown();
     }
 
-    public static IReaction buildFileCloser(HashMap<String, String> variables) throws IllegalArgumentException {
-        if(variables.isEmpty())
-            throw new IllegalArgumentException("Empty variables");
-
-        if(!isValidFilePath(variables.get("filePath")))
-            throw new IllegalArgumentException("Invalid file path");
-
-        return new FileCloser(variables.get("filePath"));
-    }
 
     public static IReaction buildVolumeController(HashMap<String, String> variables) throws IllegalArgumentException {
         if(variables.isEmpty())

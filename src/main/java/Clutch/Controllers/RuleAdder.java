@@ -109,9 +109,6 @@ public class RuleAdder {
 
         reactionsVariablesLists.put("DeviceShutDown", new ArrayList<>());
 
-        reactionsVariablesLists.put("FileCloser", new ArrayList<>());
-        reactionsVariablesLists.get("FileCloser").add("filePath");
-
         reactionsVariablesLists.put("VolumeController", new ArrayList<>());
         reactionsVariablesLists.get("VolumeController").add("volumeLevel");
 
