@@ -23,7 +23,6 @@ public class CommandExecutor implements IReaction {
     @Override
     public void react() {
         try {
-            String[] command = {this.command};
             Runtime.getRuntime().exec(command);
         } catch (Exception e) {
             e.printStackTrace();

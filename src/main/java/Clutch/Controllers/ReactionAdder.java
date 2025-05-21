@@ -52,7 +52,7 @@ public class ReactionAdder {
     }
 
 
-    public IReaction getReaction(){
+    public IReaction getReaction() throws Exception {
         HashMap<String, String> variables = new HashMap<>();
 
         Iterator<TextField> fieldIterator = reactionFields.iterator();

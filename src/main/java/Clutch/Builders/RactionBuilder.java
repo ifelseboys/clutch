@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class RactionBuilder {
-    public static IReaction build(String reactionType, HashMap<String, String> variables) throws IllegalArgumentException {
+    public static IReaction build(String reactionType, HashMap<String, String> variables) throws Exception {
         try{
             if(reactionType.equals("CommandExecutor")){
                 return buildCommandExecutor(variables);
@@ -41,20 +41,21 @@ public class RactionBuilder {
                 return null;
             }
         }
+        catch(IllegalArgumentException e){
+            throw e;
+        }
         catch(Exception e){
-            throw new IllegalArgumentException("Invalid reaction type");
+            throw new Exception("invalid reaction type");
         }
     }
 
 
     public static IReaction buildCommandExecutor(HashMap<String, String> variables) {
         String command = variables.get("command");
-        if(isCommandValid(command)){
-            return new CommandExecutor(command);
+        if(command == null || command.equals("")){
+            throw new IllegalArgumentException("empty command means nothing!");
         }
-        else{
-            throw new IllegalArgumentException("Invalid command");
-        }
+        return new CommandExecutor(command);
     }
 
     public static IReaction buildFileOpener(HashMap<String, String> variables) throws IllegalArgumentException {
@@ -125,30 +126,10 @@ public class RactionBuilder {
 
     private static boolean isValidFilePath(String path) {
         if (path == null || path.isEmpty())
-            return false; // Null or empty path is invalid
-
+            return false;
 
         File file = new File(path);
         return file.exists() && file.isFile(); // Check if the file exists and is a regular file
-    }
-
-    private static boolean isCommandValid(String command) {
-        try {
-            String os = System.getProperty("os.name");
-            int exitCode = 0;
-            if (os.toLowerCase().contains("windows")) {
-                Process process = Runtime.getRuntime().exec("where " + command);
-                exitCode = process.waitFor();
-            }
-            else if (os.toLowerCase().contains("linux")) {
-                Process process = Runtime.getRuntime().exec("which " + command);
-                exitCode = process.waitFor();
-            }
-            if (exitCode != 0) {return false;}
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
     }
 
 }

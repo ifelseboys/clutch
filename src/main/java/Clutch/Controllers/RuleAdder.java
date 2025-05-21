@@ -38,8 +38,6 @@ public class RuleAdder {
     private static Stage stage;
     private static Parent addRulefxmlFile;
 
-
-
     private static PreciseTimePicker startLineField = new PreciseTimePicker("NOW", "start time :          ");
     private static PreciseTimePicker expirationDateField = new PreciseTimePicker("INFINITY", "expiration date : ");
 
