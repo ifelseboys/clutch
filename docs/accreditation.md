@@ -11,7 +11,6 @@
   - device shut down
   - Volume controller
   - Verse from Qur'an 
-  - File closer
   - brightness controller
 - `triggers` : 
   - Time Trigger
